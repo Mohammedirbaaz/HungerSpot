@@ -71,13 +71,13 @@
 
         <EditText
             android:id="@+id/editTextDate"
-            android:layout_width="364dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="30dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginRight="25dp"
             android:layout_marginBottom="5dp"
             android:ems="10"
             android:hint="DOB"
@@ -85,13 +85,13 @@
 
         <AutoCompleteTextView
             android:id="@+id/autoCompleteTextView"
-            android:layout_width="364dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="30dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginRight="25dp"
             android:layout_marginBottom="5dp"
             android:hint="gender" />
 
@@ -152,8 +152,8 @@
 
         <Button
             android:id="@+id/registerbtn"
-            android:layout_width="200dp"
-            android:layout_height="59dp"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
             android:layout_marginStart="100dp"
             android:layout_marginLeft="100dp"
             android:layout_marginTop="30dp"
