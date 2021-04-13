@@ -1,15 +1,3 @@
 package com.example.hungerspot
 
-public class donorclass {
-    var name: String? =null;
-    var place:String?=null;
-
-    fun setname(names:String){
-        name=names;
-    }
-    fun setplace(places:String){
-        place=places;
-    }
-
-
-}
+class donorclass(val name:String,val phno:String,val email:String,val address:String,val landmark:String,val pincode:String,val password:String)

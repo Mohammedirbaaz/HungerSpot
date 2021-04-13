@@ -28,7 +28,7 @@
             android:textSize="26sp" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName3"
+            android:id="@+id/donorregusernameid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -42,7 +42,7 @@
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/editTextPhone"
+            android:id="@+id/donorregphnoid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -56,7 +56,7 @@
             android:inputType="phone" />
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress2"
+            android:id="@+id/donorregemailid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -96,7 +96,7 @@
             android:hint="gender" />
 
         <EditText
-            android:id="@+id/editTextTextPostalAddress"
+            android:id="@+id/donorregaddressid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -110,7 +110,7 @@
             android:inputType="textPostalAddress" />
 
         <EditText
-            android:id="@+id/editTextTextPassword2"
+            android:id="@+id/donorregpswdid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -124,7 +124,7 @@
             android:inputType="textPassword" />
 
         <EditText
-            android:id="@+id/editTextTextPassword3"
+            android:id="@+id/donorregcpswdid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -151,7 +151,7 @@
             android:inputType="number" />
 
         <Button
-            android:id="@+id/registerbtn"
+            android:id="@+id/registerbtniddonor"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginStart="100dp"
@@ -162,5 +162,18 @@
             android:layout_marginBottom="20dp"
             android:text="REGISTER"
             app:backgroundTint="#397787" />
+
+        <TextView
+            android:id="@+id/haveanaccountid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="50dp"
+            android:gravity="center"
+            android:text="Already have an account?"
+            android:textSize="20sp" />
     </LinearLayout>
 </ScrollView>
