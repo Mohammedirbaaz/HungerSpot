@@ -3,6 +3,7 @@ package com.example.hungerspot
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -61,19 +62,27 @@ class DonorRegisterActivity : AppCompatActivity() {
             val passwords = password.text.toString().trim();
             val cpasswords = cpassword.text.toString().trim();
 
+
+
             if(cpasswords.equals(passwords)){
                 val donorreg = donorclass(names, phnos,emails,addresss,landmarks,pincodes,passwords);
                 val reffs = FirebaseDatabase.getInstance().getReference("Donor");
 
-                reffs.push().key?.let { it1 ->
-                    reffs.child(it1).setValue(donorreg).addOnCompleteListener{
-                        Toast.makeText(this,"uploaded Successfully",Toast.LENGTH_SHORT).show();
+                val stremail=email.text.toString();
+                var emailsplitter=stremail.indexOf("@");
+                val finalstring=stremail.substring(0,emailsplitter);
+//                 Toast.makeText(this,finalstring,Toast.LENGTH_SHORT).show();
 
-                    }.addOnCanceledListener {
-                        Toast.makeText(this,"Uploading Failed",Toast.LENGTH_SHORT).show();
 
-                    }
-                };
+
+                reffs.child(finalstring).setValue(donorreg).addOnCompleteListener{
+                      Toast.makeText(this,"Registered Successfully",Toast.LENGTH_SHORT).show();
+
+                }.addOnCanceledListener {
+                      Toast.makeText(this,"Registeration Failed",Toast.LENGTH_SHORT).show();
+
+                }
+
 
             }else{
                 Toast.makeText(this,"Passwords are not matching",Toast.LENGTH_SHORT).show();
