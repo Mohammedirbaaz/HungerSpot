@@ -33,7 +33,6 @@ public class SessionManagment{
         return userids;
     }
     fun removeSession(){
-
         editor.putString(SESSION_KEY," ").commit();
     }
 

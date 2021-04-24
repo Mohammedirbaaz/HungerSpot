@@ -1,5 +1,6 @@
 package com.example.hungerspot
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -59,12 +61,12 @@ class Mydetails : Fragment() {
         var landmarks=view.findViewById<EditText>(R.id.idlandmark);
         var phnoss=view.findViewById<EditText>(R.id.idphno);
         var pincodess=view.findViewById<EditText>(R.id.idpincode);
+        var logoutbtnss=view.findViewById<Button>(R.id.idlogoutbtn)
 
 
         val sessionManagement = SessionManagment();
         activity?.let { sessionManagement.SessionManagement2(it) };
         var useridsss=sessionManagement.getSession();
-        Toast.makeText(activity,useridsss,Toast.LENGTH_SHORT).show();
         var reffs=FirebaseDatabase.getInstance().getReference("Donor").child(useridsss.toString());
         reffs.addValueEventListener(object :ValueEventListener{
             override fun onCancelled(error: DatabaseError) { }
@@ -94,6 +96,16 @@ class Mydetails : Fragment() {
             }
 
         })
+
+        logoutbtnss.setOnClickListener {
+            sessionManagement.removeSession();
+            Toast.makeText(activity,"Successfully logouted!!",Toast.LENGTH_SHORT).show();
+            var intentn=Intent(activity,DonorLoginActivity::class.java);
+            startActivity(intentn);
+
+        }
+
+
 
     }
     companion object {
