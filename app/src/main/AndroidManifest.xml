@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HungerSpot">
-        <activity android:name=".VolunteerFoodDelivered"></activity>
+        <activity
+            android:name=".DonorMainActivity"
+            android:label="@string/title_activity_donor_main"
+            android:theme="@style/Theme.HungerSpot.NoActionBar"></activity>
+        <activity android:name=".VolunteerFoodDelivered" />
         <activity android:name=".VolunteerSendRequestActivity" />
         <activity android:name=".VolunteerMainActivity" />
         <activity android:name=".VolunteerLoginActivity" />
@@ -17,7 +21,6 @@
         <activity android:name=".DonorVolunteerBioActivity" />
         <activity android:name=".DonorRequestActivity" />
         <activity android:name=".DonorFoodUploadActivity" />
-        <activity android:name=".DonorMainActivity" />
         <activity android:name=".DonorLoginActivity" />
         <activity android:name=".DonorRegisterActivity" />
         <activity
