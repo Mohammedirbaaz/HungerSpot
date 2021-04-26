@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -48,7 +49,6 @@ class Mydetails : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_mydetails, container, false)
     }
 
@@ -67,7 +67,14 @@ class Mydetails : Fragment() {
         val sessionManagement = SessionManagment();
         activity?.let { sessionManagement.SessionManagement2(it) };
         var useridsss=sessionManagement.getSession();
-        var reffs=FirebaseDatabase.getInstance().getReference("Donor").child(useridsss.toString());
+        val ff="||";
+        val list= useridsss?.split(ff);
+        val userid= list?.get(0);
+        val pincode= list?.get(1);
+
+
+        Toast.makeText(activity,useridsss.toString(),Toast.LENGTH_SHORT).show();
+        var reffs=FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(userid.toString());
         reffs.addValueEventListener(object :ValueEventListener{
             override fun onCancelled(error: DatabaseError) { }
 

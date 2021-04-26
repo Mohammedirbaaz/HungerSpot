@@ -8,72 +8,135 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import kotlin.math.log
 
 class DonorLoginActivity : AppCompatActivity() {
+
+lateinit var reffsfinal:DatabaseReference;
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_donor_login);
+        var hvalue:String?=null
+        var kvalue:String?=null;
 
         var btnslogin=findViewById<Button>(R.id.btnloginid);
         var usernamess=findViewById<EditText>(R.id.usernameid);
         var passwordss=findViewById<EditText>(R.id.passwordid);
 
         var didnthaveacnt=findViewById<TextView>(R.id.donthaveacnt);
+
         didnthaveacnt.setOnClickListener {
             var intent3=Intent(this,DonorRegisterActivity::class.java);
             startActivity(intent3);
         }
 
-
         btnslogin.setOnClickListener {
-            val reffs = FirebaseDatabase.getInstance().getReference("Donor");
 
-            var userinfo=usernamess.text.toString();
-            var passwordinfo=passwordss.text.toString();
-            val emailsplitter2=userinfo.indexOf("@");
-            val finalstring2=userinfo.substring(0,emailsplitter2);
+            val reffsforpincode=FirebaseDatabase.getInstance().getReference("Donor");
+            reffsforpincode.addValueEventListener(object:ValueEventListener{
+                override fun onCancelled(error: DatabaseError) {}
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (h in snapshot.children){
+//                    Toast.makeText(this@DonorRegisterActivity,h.toString(),Toast.LENGTH_SHORT).show()
+                        Log.i("checksss",h.key.toString());
+                        val reffs2=FirebaseDatabase.getInstance().getReference("Donor").child(h.key.toString());
+                        reffs2.addValueEventListener(object:ValueEventListener{
+                            override fun onCancelled(error: DatabaseError) {}
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                for (k in snapshot.children){
+                                    Log.i("checkss2",k.key.toString());
+                                    if(usernamess.text.toString()==k.key.toString()+"@gmail.com"){
+                                        hvalue=h.key.toString();
+                                        kvalue=k.key.toString();
+                                        Log.i("hvalue and kvalue are :",hvalue+" "+kvalue)
+                                        reffsfinal= FirebaseDatabase.getInstance().getReference("Donor").child(h.key.toString()).child(k.key.toString())
+                                        verifications(hvalue!!, kvalue!!,usernamess.text.toString(),passwordss.text.toString());
+                                        break;
+                                    }
+                                }
+                            }
 
+                        })
 
-            reffs.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val userfromdb=dataSnapshot.child(finalstring2).child("email").value.toString();
-                    val pswdfromdb=dataSnapshot.child(finalstring2).child("password").value.toString();
-                    val username=dataSnapshot.child(finalstring2).child("name").value.toString();
-
-                    if(userinfo==userfromdb && passwordinfo==pswdfromdb){
-                            Toast.makeText(applicationContext,"loggedin",Toast.LENGTH_SHORT).show();
-
-                            val user=User(finalstring2,username);
-                            val sessionManagement = SessionManagment();
-                            sessionManagement.SessionManagement2(this@DonorLoginActivity);
-                            sessionManagement.saveSession(user);
-                            movetomainactivity();
-
-
-                    }else{
-                        Toast.makeText(applicationContext,"userid or password is incorrect",Toast.LENGTH_SHORT).show();
 
                     }
-
-
                 }
 
-                override fun onCancelled(databaseError: DatabaseError) {
-                    // Getting Post failed, log a message
-                    Log.w("firebase", "loadPost:onCancelled", databaseError.toException())
-                }
             })
+
+
 
         }
 
 
+    }
+    fun verifications(Hvalue:String,Kvalue:String,userid:String,pswd:String){
+
+
+
+        val reffs = Hvalue.let { it1 -> Kvalue.let { it2 -> FirebaseDatabase.getInstance().getReference("Donor").child(it1).child(it2) } };
+
+        var userinfo=userid;
+        var passwordinfo=pswd;
+        val emailsplitter2=userinfo.indexOf("@");
+        val finalstring2=userinfo.substring(0,emailsplitter2);
+
+
+
+
+        reffs.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                var userfromdb:String?=null;
+                var pswdfromdb:String?=null;
+                var pincodes:String?=null;
+
+                for(h in dataSnapshot.children){
+                    if(h.key.toString()=="email"){
+                        userfromdb=h.value.toString();
+
+                    }
+                    else if(h.key.toString()=="password"){
+                        pswdfromdb=h.value.toString();
+                    }else if(h.key.toString()=="pincode"){
+                        pincodes=h.value.toString()
+                    }
+                }
+                val username=dataSnapshot.child("name").value.toString();
+
+                if(userinfo==userfromdb && passwordinfo==pswdfromdb){
+
+
+
+                    Toast.makeText(applicationContext,"loggedin",Toast.LENGTH_SHORT).show();
+
+
+                    val user= User(Kvalue,username, Hvalue);
+                    val sessionManagement = SessionManagment();
+                    sessionManagement.SessionManagement2(this@DonorLoginActivity);
+                    if (user != null) {
+                        sessionManagement.saveSession(user)
+                    };
+                    movetomainactivity();
+
+
+                }else{
+
+                    Toast.makeText(applicationContext,"userid or password is incorrect",Toast.LENGTH_SHORT).show();
+
+                }
+
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w("firebase", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
     }
 
     override fun onStart() {

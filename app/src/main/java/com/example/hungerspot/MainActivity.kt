@@ -33,6 +33,10 @@ class MainActivity : AppCompatActivity() {
             var intent2=Intent(this,VolunteerLoginActivity::class.java);
             startActivity(intent2);
         }
+//        val intentss=intent.getStringExtra("secret1");
+//        if(intentss=="toquit"){
+//            finish()
+//        }
 
 
 

@@ -8,7 +8,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class DonorRegisterActivity : AppCompatActivity() {
     lateinit var name:EditText;
@@ -50,6 +53,9 @@ class DonorRegisterActivity : AppCompatActivity() {
 
 
 
+
+
+
         regbtn.setOnClickListener {
 
 
@@ -75,7 +81,7 @@ class DonorRegisterActivity : AppCompatActivity() {
 
 
 
-                reffs.child(finalstring).setValue(donorreg).addOnCompleteListener{
+                reffs.child(pincodes).child(finalstring).setValue(donorreg).addOnCompleteListener{
                       Toast.makeText(this,"Registered Successfully",Toast.LENGTH_SHORT).show();
 
                 }.addOnCanceledListener {

@@ -1,11 +1,13 @@
 package com.example.hungerspot.ui.gallery
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +21,7 @@ import com.example.hungerspot.SessionManagment
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
 import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
@@ -26,6 +29,9 @@ import java.util.*
 class GalleryFragment : Fragment() {
 
     lateinit var filepath:Uri
+    lateinit var imgurl:String
+
+
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -39,6 +45,9 @@ class GalleryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState);
+
+
+
 
 
         val btnfrom=view.findViewById<Button>(R.id.btntimefrom);
@@ -75,34 +84,19 @@ class GalleryFragment : Fragment() {
         }
 
         btnfoodupload.setOnClickListener {
-            val sessionManagement = SessionManagment();
-            activity?.let { it1 -> sessionManagement.SessionManagement2(it1) };
-            val idss=sessionManagement.getSession();
-            uploadFile();
-            var fooduploaddata=foodupload(textdatefrom.text.toString(),textdatetill.text.toString(),addressf.text.toString(),landmarkf.text.toString(),notesf.text.toString());
-            var reffs2= idss?.let { it1 -> FirebaseDatabase.getInstance().getReference("Donor").child(it1).child("MyContribution") }
 
-            reffs2?.setValue(fooduploaddata)?.addOnCompleteListener {
+            val progressDialog=ProgressDialog(activity);
+            progressDialog.setMessage("Uploading..");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
 
-                Toast.makeText(activity,"Item Uploaded", Toast.LENGTH_SHORT).show();
-            }?.addOnCanceledListener {
-                Toast.makeText(activity,"Failed to Upload",Toast.LENGTH_SHORT).show();
+            uploadImageAndDetail(progressDialog);
 
-            }
 
         }
         images.setOnClickListener{
             startFileChooser();
         }
-
-
-
-
-
-
-
-
-
     }
     fun startFileChooser(){
 
@@ -111,15 +105,41 @@ class GalleryFragment : Fragment() {
         i.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(i,"Choose pics"),111);
     }
-    fun uploadFile(){
-        var temp:Long=System.currentTimeMillis();
+    fun uploadImageAndDetail(Prog:ProgressDialog){
+
+        val textdatefrom=view?.findViewById<TextView>(R.id.idtimefrom);
+        val textdatetill=view?.findViewById<TextView>(R.id.idtimetill);
+        var addressf=view?.findViewById<EditText>(R.id.idaddressdonor);
+        var landmarkf=view?.findViewById<EditText>(R.id.idlandmarkdonor);
+        var notesf=view?.findViewById<EditText>(R.id.idnotesdonor);
+
         var imgreffs=FirebaseStorage.getInstance().reference.child("DonorContributions").child( "pic.jpg");
-        imgreffs.putFile(filepath ).addOnSuccessListener {p0->
-//            p0.storage.downloadUrl.result
-            Toast.makeText(activity,"Image Added!!",Toast.LENGTH_SHORT).show();
-        }.addOnFailureListener {p0->
-            Toast.makeText(activity,p0.message,Toast.LENGTH_SHORT).show();
-        }
+        imgreffs.putFile(filepath).addOnSuccessListener(object:OnSuccessListener<UploadTask.TaskSnapshot>{
+            override fun onSuccess(p0: UploadTask.TaskSnapshot?) {
+                imgreffs.downloadUrl.addOnSuccessListener(object :OnSuccessListener<Uri>{
+                    override fun onSuccess(p0: Uri?) {
+                        imgurl=p0.toString();
+
+                        val sessionManagement = SessionManagment();
+                        activity?.let { it1 -> sessionManagement.SessionManagement2(it1) };
+                        val idss=sessionManagement.getSession();
+
+                        var fooduploaddata=foodupload(imgurl, textdatefrom?.text.toString(), textdatetill?.text.toString(), addressf?.text.toString(), landmarkf?.text.toString(), notesf?.text.toString());
+                        var reffs2= idss?.let { it1 -> FirebaseDatabase.getInstance().getReference("Donor").child(it1).child("MyContribution").push() }
+
+                        reffs2?.setValue(fooduploaddata)?.addOnCompleteListener {
+                            Prog.dismiss();
+                            Toast.makeText(activity,"Item Uploaded", Toast.LENGTH_SHORT).show();
+                        }?.addOnCanceledListener {
+                            Toast.makeText(activity,"Failed to Upload",Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+
+                })
+            }
+
+        })
     }
 
 
@@ -139,4 +159,6 @@ class GalleryFragment : Fragment() {
 }
 
 
-class foodupload(var timefrom:String,var timetill:String,var address:String?,var landmark:String?,var notes:String?)
+
+
+class foodupload(var imgurl:String,var timefrom:String,var timetill:String,var address:String?,var landmark:String?,var notes:String?)

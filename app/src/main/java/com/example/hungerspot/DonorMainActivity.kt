@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.app.Notification
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.util.AttributeSet
 import android.view.Menu
@@ -53,7 +54,11 @@ class DonorMainActivity : AppCompatActivity() {
         var alert=AlertDialog.Builder(this);
 
         alert.setMessage("Are you sure? you want to exit?").setPositiveButton("Yes"){dialog: DialogInterface?, which: Int ->
-            finish()
+//            finish()
+              val Intents=Intent(this,MainActivity::class.java);
+//              Intents.putExtra("secret1","toquit")
+              startActivity(Intents);
+
         }.setNegativeButton("Stay"){dialog:DialogInterface, which -> }
         val alertDialog: AlertDialog = alert.create()
         // Set other dialog properties
