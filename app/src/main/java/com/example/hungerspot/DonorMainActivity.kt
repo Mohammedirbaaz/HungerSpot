@@ -1,19 +1,11 @@
 package com.example.hungerspot
 
-import android.app.Dialog
-import android.app.Notification
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.AttributeSet
 import android.view.Menu
-import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -23,8 +15,6 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import org.w3c.dom.Text
 
 class DonorMainActivity : AppCompatActivity() {
 
@@ -36,16 +26,30 @@ class DonorMainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
+        val sessionManagement = SessionManagment();
+        sessionManagement.SessionManagement2(this);
+        var useridsss=sessionManagement.getSession();
+        val ff="||";
+        val list= useridsss?.split(ff);
+        val userid= list?.get(0);
+        val pincode= list?.get(1);
+        val typesofuser= list?.get(2);
 
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,R.id.nav_mycontribution,R.id.nav_mydetail), drawerLayout)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController);
+
+
+
+            Toast.makeText(this,typesofuser,Toast.LENGTH_SHORT).show();
+
+            val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+            val navView: NavigationView = findViewById(R.id.nav_view)
+            val navController = findNavController(R.id.nav_host_fragment)
+            // Passing each menu ID as a set of Ids because each
+            // menu should be considered as top level destinations.
+            appBarConfiguration = AppBarConfiguration(setOf(
+                    R.id.nav_home2, R.id.nav_gallery, R.id.nav_slideshow,R.id.nav_mycontribution,R.id.nav_mydetail), drawerLayout)
+            setupActionBarWithNavController(navController, appBarConfiguration)
+            navView.setupWithNavController(navController);
+
 
 
     }

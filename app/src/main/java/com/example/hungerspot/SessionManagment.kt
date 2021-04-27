@@ -23,12 +23,14 @@ public class SessionManagment{
     fun saveSession(user:User){
         val ids: String? =user.ids;
         val pincs:String?=user.pincodes;
-        var alls=ids+"||"+pincs
+        val types:String?=user.typesofuser;
+        var alls=ids+"||"+pincs+"||"+types;
         editor.putString(SESSION_KEY,alls).commit();
 
 
 
     }
+
 
     fun  getSession(): String? {
         var userids= sharedpref?.getString(SESSION_KEY," ");

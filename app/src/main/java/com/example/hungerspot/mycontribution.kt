@@ -1,15 +1,11 @@
 package com.example.hungerspot
 
-import android.accounts.AccountManager.get
-import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,8 +13,6 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.squareup.picasso.Picasso
-import java.lang.reflect.Array.get
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,10 +54,12 @@ class mycontribution : Fragment() {
         val list= useridsss?.split(ff);
         val userid= list?.get(0);
         val pincode= list?.get(1);
+        val typesofuser= list?.get(2);
+
 
         mRecyclerview=view.findViewById(R.id.idlistview);
         Log.i("yessss",pincode+" "+userid);
-        mDatabase=FirebaseDatabase.getInstance().getReference("Donor").child("mbappe||142536").child("MyContribution");
+        mDatabase=FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(userid.toString()).child("MyContribution");
         mDatabase.keepSynced(true);
         mRecyclerview.setHasFixedSize(true);
         mRecyclerview.layoutManager=LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
@@ -94,7 +90,7 @@ class mycontribution : Fragment() {
                 model: Contribution
             ) {
                 holder.notess.setText(model.notes);
-                Picasso.get().load(model.imgurl).into(holder.imgs)
+//                Picasso.get().load(model.imgurl).into(holder.imgs)
 
                 holder.from.setText(model.timefrom);
                 holder.till.setText(model.timetill);
@@ -119,7 +115,7 @@ class mycontribution : Fragment() {
     }
 }
 class contributeViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
-    var imgs=itemView.findViewById<ImageView>(R.id.idimage);
+//    var imgs=itemView.findViewById<ImageView>(R.id.idimage);
     var notess=itemView.findViewById<TextView>(R.id.idnotess);
     var from=itemView.findViewById<TextView>(R.id.idfrom);
     var till=itemView.findViewById<TextView>(R.id.idtill);

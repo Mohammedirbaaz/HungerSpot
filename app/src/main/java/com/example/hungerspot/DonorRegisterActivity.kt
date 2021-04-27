@@ -3,15 +3,11 @@ package com.example.hungerspot
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 class DonorRegisterActivity : AppCompatActivity() {
     lateinit var name:EditText;
@@ -40,16 +36,16 @@ class DonorRegisterActivity : AppCompatActivity() {
         }
 
 
-        name=findViewById(R.id.donorregusernameid);
-        phno=findViewById(R.id.donorregphnoid);
-        email=findViewById(R.id.donorregemailid);
-        address=findViewById(R.id.donorregaddressid);
+        name=findViewById(R.id.usernamevoluntid);
+        phno=findViewById(R.id.phnovoluntid);
+        email=findViewById(R.id.emailvoluntid);
+        address=findViewById(R.id.addressvoluntid);
         landmark=findViewById(R.id.donorreglanmrkid);
         pincode=findViewById(R.id.donorregpincodeid);
-        password=findViewById(R.id.donorregpswdid);
-        cpassword=findViewById(R.id.donorregcpswdid);
+        password=findViewById(R.id.pswdvoluntid);
+        cpassword=findViewById(R.id.cpswdvoluntid);
 
-        regbtn=findViewById(R.id.registerbtniddonor);
+        regbtn=findViewById(R.id.regbtnvoluntid);
 
 
 

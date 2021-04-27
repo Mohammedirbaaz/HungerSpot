@@ -71,38 +71,86 @@ class Mydetails : Fragment() {
         val list= useridsss?.split(ff);
         val userid= list?.get(0);
         val pincode= list?.get(1);
+        val typesofuser= list?.get(2);
 
 
-        Toast.makeText(activity,useridsss.toString(),Toast.LENGTH_SHORT).show();
-        var reffs=FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(userid.toString());
-        reffs.addValueEventListener(object :ValueEventListener{
-            override fun onCancelled(error: DatabaseError) { }
+        if(typesofuser=="Donor") {
+            Toast.makeText(activity, useridsss.toString(), Toast.LENGTH_SHORT).show();
+            var reffs =
+                FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString())
+                    .child(userid.toString());
+            reffs.addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {}
 
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for(h in snapshot.children){
-                    if(h.key.toString()=="name"){
-                        namess.text=h.value.toString();
-                    }
-                    else if(h.key.toString()=="email"){
-                        emailss.text=Editable.Factory.getInstance().newEditable(h.value.toString());
-                    }
-                    else if(h.key.toString()=="address"){
-                        addresss.text=Editable.Factory.getInstance().newEditable(h.value.toString());
-                    }
-                    else if(h.key.toString()=="landmark"){
-                        landmarks.text=Editable.Factory.getInstance().newEditable(h.value.toString());
-                    }
-                    else if(h.key.toString()=="phno"){
-                        phnoss.text=Editable.Factory.getInstance().newEditable(h.value.toString());
-                    }
-                    else if(h.key.toString()=="pincode"){
-                        pincodess.text=Editable.Factory.getInstance().newEditable(h.value.toString());
-                    }
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (h in snapshot.children) {
+                        if (h.key.toString() == "name") {
+                            namess.text = h.value.toString();
+                        } else if (h.key.toString() == "email") {
+                            emailss.text =
+                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                        } else if (h.key.toString() == "address") {
+                            addresss.text =
+                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                        } else if (h.key.toString() == "landmark") {
+                            landmarks.text =
+                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                        } else if (h.key.toString() == "phno") {
+                            phnoss.text =
+                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                        } else if (h.key.toString() == "pincode") {
+                            pincodess.text =
+                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                        }
 
+                    }
                 }
-            }
 
-        })
+            })
+        }else if(typesofuser=="Volunteer"){
+
+            var dob=view.findViewById<EditText>(R.id.iddobs)
+            var gender=view.findViewById<EditText>(R.id.idgender)
+
+            dob.visibility=View.VISIBLE;
+            gender.visibility=View.VISIBLE;
+
+            var reffs =
+                FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString())
+                    .child(userid.toString());
+            reffs.addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {}
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (h in snapshot.children) {
+                        if (h.key.toString() == "name") {
+                            namess.text = h.value.toString();
+                        } else if (h.key.toString() == "email") {
+                            emailss.text =
+                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                        } else if (h.key.toString() == "address") {
+                            addresss.text =
+                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                        } else if (h.key.toString() == "landmark") {
+                            landmarks.text =
+                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                        } else if (h.key.toString() == "phno") {
+                            phnoss.text =
+                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                        } else if (h.key.toString() == "pincode") {
+                            pincodess.text =
+                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                        } else if (h.key.toString() == "gender") {
+                            gender.text =
+                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                        } else if (h.key.toString() == "dob") {
+                            dob.text =
+                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                        }
+                    }
+                }
+            })
+        }
 
         logoutbtnss.setOnClickListener {
             sessionManagement.removeSession();
@@ -111,9 +159,6 @@ class Mydetails : Fragment() {
             startActivity(intentn);
 
         }
-
-
-
     }
     companion object {
 

@@ -21,6 +21,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val sessionManagement = SessionManagment();
+        sessionManagement.SessionManagement2(this);
+        var useridsss=sessionManagement.getSession();
+        val ff="||";
+        val list= useridsss?.split(ff);
+//        val userid= list?.get(0);
+//        val pincode= list?.get(1);
+//        val typesofuser= list?.get(2);
+//Toast.makeText(this,userid+" "+pincode+" "+typesofuser,Toast.LENGTH_LONG).show()
 
         var donorbtn=findViewById<Button>(R.id.donorbtnid);
         var volunteerbtn=findViewById<Button>(R.id.volunteerbtnid);

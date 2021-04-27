@@ -106,6 +106,15 @@ class GalleryFragment : Fragment() {
         startActivityForResult(Intent.createChooser(i,"Choose pics"),111);
     }
     fun uploadImageAndDetail(Prog:ProgressDialog){
+        val sessionManagement = SessionManagment();
+        activity?.let { sessionManagement.SessionManagement2(it) };
+        var useridsss=sessionManagement.getSession();
+        val ff="||";
+        val list= useridsss?.split(ff);
+        val userid= list?.get(0);
+        val pincode= list?.get(1);
+        val typesofuser= list?.get(2);
+
 
         val textdatefrom=view?.findViewById<TextView>(R.id.idtimefrom);
         val textdatetill=view?.findViewById<TextView>(R.id.idtimetill);
@@ -125,12 +134,16 @@ class GalleryFragment : Fragment() {
                         val idss=sessionManagement.getSession();
 
                         var fooduploaddata=foodupload(imgurl, textdatefrom?.text.toString(), textdatetill?.text.toString(), addressf?.text.toString(), landmarkf?.text.toString(), notesf?.text.toString());
-                        var reffs2= idss?.let { it1 -> FirebaseDatabase.getInstance().getReference("Donor").child(it1).child("MyContribution").push() }
+                        var reffs2= FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(userid.toString()).child("MyContribution").push()
 
-                        reffs2?.setValue(fooduploaddata)?.addOnCompleteListener {
-                            Prog.dismiss();
-                            Toast.makeText(activity,"Item Uploaded", Toast.LENGTH_SHORT).show();
-                        }?.addOnCanceledListener {
+                        reffs2.setValue(fooduploaddata).addOnCompleteListener {
+                            var reffs3= FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child("MyContribution@@").push()
+                            reffs3.setValue(fooduploaddata).addOnCompleteListener{
+                                Prog.dismiss();
+                                Toast.makeText(activity,"Item Uploaded", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }.addOnCanceledListener {
                             Toast.makeText(activity,"Failed to Upload",Toast.LENGTH_SHORT).show();
 
                         }

@@ -9,7 +9,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.*
-import kotlin.math.log
 
 class DonorLoginActivity : AppCompatActivity() {
 
@@ -22,9 +21,9 @@ lateinit var reffsfinal:DatabaseReference;
         var hvalue:String?=null
         var kvalue:String?=null;
 
-        var btnslogin=findViewById<Button>(R.id.btnloginid);
-        var usernamess=findViewById<EditText>(R.id.usernameid);
-        var passwordss=findViewById<EditText>(R.id.passwordid);
+        var btnslogin=findViewById<Button>(R.id.btnloginvoluntid);
+        var usernamess=findViewById<EditText>(R.id.usernamevoluntidl);
+        var passwordss=findViewById<EditText>(R.id.passwordvoluntidl);
 
         var didnthaveacnt=findViewById<TextView>(R.id.donthaveacnt);
 
@@ -73,6 +72,7 @@ lateinit var reffsfinal:DatabaseReference;
 
 
     }
+
     fun verifications(Hvalue:String,Kvalue:String,userid:String,pswd:String){
 
 
@@ -114,12 +114,10 @@ lateinit var reffsfinal:DatabaseReference;
                     Toast.makeText(applicationContext,"loggedin",Toast.LENGTH_SHORT).show();
 
 
-                    val user= User(Kvalue,username, Hvalue);
+                    val user= User(Kvalue,username, Hvalue,"Donor");
                     val sessionManagement = SessionManagment();
                     sessionManagement.SessionManagement2(this@DonorLoginActivity);
-                    if (user != null) {
-                        sessionManagement.saveSession(user)
-                    };
+                    sessionManagement.saveSession(user);
                     movetomainactivity();
 
 
@@ -142,19 +140,28 @@ lateinit var reffsfinal:DatabaseReference;
     override fun onStart() {
         super.onStart();
 
-        val sessionManagement = SessionManagment();
-        sessionManagement.SessionManagement2(this@DonorLoginActivity);
-
-        val userid: String? = sessionManagement.getSession();
-
-        if (userid != null) {
-            Log.i("idss",userid)
-        };
-
-        if(userid!=" "){
-            movetomainactivity();
-
-        }
+//        val sessionManagement = SessionManagment();
+//        sessionManagement.SessionManagement2(this);
+//        var useridsss=sessionManagement.getSession();
+//        val ff="||";
+//        val list1= useridsss?.split(ff);
+//        val userid1= list1?.get(0);
+//        val pincode1= list1?.get(1);
+//        val typesofuser1= list1?.get(2);
+//
+//        if(list1!=null) {
+//            if (userid1 != null) {
+//                Log.i("idss", userid1)
+//            };
+//
+//            if (userid1 != " " && typesofuser1 != " " && pincode1 != " ") {
+//                if (typesofuser1 == "Donor") {
+//                    movetomainactivity();
+//                }
+//            }
+//        }else{
+//            Toast.makeText(this,"dfdf",Toast.LENGTH_SHORT).show()
+//        }
     }
     fun movetomainactivity(){
         val intent:Intent= Intent(this,DonorMainActivity::class.java);
