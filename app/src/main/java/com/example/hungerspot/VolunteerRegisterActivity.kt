@@ -18,7 +18,7 @@ class VolunteerRegisterActivity : AppCompatActivity() {
         var phno=findViewById<EditText>(R.id.phnovoluntid);
         var emails=findViewById<EditText>(R.id.emailvoluntid);
         var dob=findViewById<EditText>(R.id.dobvoluntid);
-        var gender=findViewById<EditText>(R.id.gendervoluntid);
+//        var gender=findViewById<EditText>(R.id.gendervoluntid);
         var addresss=findViewById<EditText>(R.id.addressvoluntid);
         var landmarks=findViewById<EditText>(R.id.landmarkvoluntid);
         var pswd=findViewById<EditText>(R.id.pswdvoluntid);
@@ -44,7 +44,6 @@ class VolunteerRegisterActivity : AppCompatActivity() {
             val addresssn = addresss.text.toString().trim();
             val landmarksn = landmarks.text.toString().trim();
             val dobsn=dob.text.toString().trim();
-            val gendern=gender.text.toString().trim();
             val pincodesn = pinc.text.toString().trim();
             val passwordsn = pswd.text.toString().trim();
             val cpasswordsn = cpswd.text.toString().trim();
@@ -52,7 +51,7 @@ class VolunteerRegisterActivity : AppCompatActivity() {
 
 
             if(cpasswordsn.equals(passwordsn)){
-                val donorreg = volunteerclass(namesn, phnosn,emailsn,addresssn,landmarksn,dobsn,gendern,pincodesn,passwordsn);
+                val donorreg = volunteerclass(namesn, phnosn,emailsn,addresssn,landmarksn,dobsn,pincodesn,passwordsn);
                 val reffs = FirebaseDatabase.getInstance().getReference("Volunteer");
 
                 val stremail=emails.text.toString();

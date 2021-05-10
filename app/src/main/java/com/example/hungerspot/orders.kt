@@ -2,7 +2,7 @@ package com.example.hungerspot
 
 class orders{
     var notes:String?=null;
-    //    var imgurl:String?=null;
+//    var imgurl:String?=null;
     var timefrom:String?=null;
     var timetill:String?=null;
 

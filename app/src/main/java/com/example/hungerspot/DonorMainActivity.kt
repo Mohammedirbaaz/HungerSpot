@@ -38,7 +38,7 @@ class DonorMainActivity : AppCompatActivity() {
 
 
 
-            Toast.makeText(this,typesofuser,Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this,typesofuser,Toast.LENGTH_SHORT).show();
 
             val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
             val navView: NavigationView = findViewById(R.id.nav_view)

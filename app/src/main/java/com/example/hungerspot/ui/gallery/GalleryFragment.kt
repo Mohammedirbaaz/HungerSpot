@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.hungerspot.R
 import com.example.hungerspot.SessionManagment
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import org.w3c.dom.Text
@@ -59,6 +63,8 @@ class GalleryFragment : Fragment() {
         var landmarkf=view.findViewById<EditText>(R.id.idlandmarkdonor);
         var notesf=view.findViewById<EditText>(R.id.idnotesdonor);
         var images=view.findViewById<ImageView>(R.id.idimage);
+
+
 
         btnfrom.setOnClickListener {
             val cal=Calendar.getInstance();
@@ -115,6 +121,24 @@ class GalleryFragment : Fragment() {
         val pincode= list?.get(1);
         val typesofuser= list?.get(2);
 
+        var usernameforuploads:String?=null;
+
+        var reffs=FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(userid.toString())
+        reffs.addValueEventListener(object :ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {}
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(h in snapshot.children){
+                    if(h.key.toString()=="name"){
+                        usernameforuploads=h.value.toString();
+                        Toast.makeText(activity,usernameforuploads.toString(),Toast.LENGTH_SHORT).show();
+                        Log.i("ccc",usernameforuploads.toString());
+
+                    }
+                }
+            }
+        })
+
 
         val textdatefrom=view?.findViewById<TextView>(R.id.idtimefrom);
         val textdatetill=view?.findViewById<TextView>(R.id.idtimetill);
@@ -133,7 +157,7 @@ class GalleryFragment : Fragment() {
                         activity?.let { it1 -> sessionManagement.SessionManagement2(it1) };
                         val idss=sessionManagement.getSession();
 
-                        var fooduploaddata=foodupload(imgurl, textdatefrom?.text.toString(), textdatetill?.text.toString(), addressf?.text.toString(), landmarkf?.text.toString(), notesf?.text.toString());
+                        var fooduploaddata=foodupload(imgurl, textdatefrom?.text.toString(), textdatetill?.text.toString(), addressf?.text.toString(), landmarkf?.text.toString(), notesf?.text.toString(),usernameforuploads,userid.toString());
                         var reffs2= FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(userid.toString()).child("MyContribution").push()
 
                         reffs2.setValue(fooduploaddata).addOnCompleteListener {
@@ -174,4 +198,4 @@ class GalleryFragment : Fragment() {
 
 
 
-class foodupload(var imgurl:String,var timefrom:String,var timetill:String,var address:String?,var landmark:String?,var notes:String?)
+class foodupload(var imgurl:String,var timefrom:String,var timetill:String,var address:String?,var landmark:String?,var notes:String?,var usernameforuploads:String?,var useridforuploads:String?)

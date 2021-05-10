@@ -110,10 +110,10 @@ class Mydetails : Fragment() {
         }else if(typesofuser=="Volunteer"){
 
             var dob=view.findViewById<EditText>(R.id.iddobs)
-            var gender=view.findViewById<EditText>(R.id.idgender)
+//            var gender=view.findViewById<EditText>(R.id.idgender)
 
             dob.visibility=View.VISIBLE;
-            gender.visibility=View.VISIBLE;
+//            gender.visibility=View.VISIBLE;
 
             var reffs =
                 FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString())
@@ -140,10 +140,12 @@ class Mydetails : Fragment() {
                         } else if (h.key.toString() == "pincode") {
                             pincodess.text =
                                 Editable.Factory.getInstance().newEditable(h.value.toString());
-                        } else if (h.key.toString() == "gender") {
-                            gender.text =
-                                Editable.Factory.getInstance().newEditable(h.value.toString());
-                        } else if (h.key.toString() == "dob") {
+                        }
+//                        else if (h.key.toString() == "gender") {
+//                            gender.text =
+//                                Editable.Factory.getInstance().newEditable(h.value.toString());
+//                        }
+                        else if (h.key.toString() == "dob") {
                             dob.text =
                                 Editable.Factory.getInstance().newEditable(h.value.toString());
                         }

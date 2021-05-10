@@ -36,18 +36,18 @@ class HomeFragmentvolunt : Fragment() {
         val pincode= list?.get(1);
         val typesofuser= list?.get(2);
 
-        var foodupload=view.findViewById<Button>(R.id.idfooduploadbtn)
-        var request=view.findViewById<Button>(R.id.idrequests)
-        var mycontribution=view.findViewById<Button>(R.id.idmycontributes)
+//        var foodupload=view.findViewById<Button>(R.id.idfooduploadbtn)
+//        var request=view.findViewById<Button>(R.id.idrequests)
+//        var mycontribution=view.findViewById<Button>(R.id.idmycontributes)
 
-        foodupload.setOnClickListener {
-            val gm:Fragment=GalleryFragment();
-//            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.nav_gallery,hm)?.commit()
-            val Fragmentss: FragmentTransaction? = fragmentManager?.beginTransaction()
-            Fragmentss?.replace(R.id.nav_home,gm);
-            Fragmentss?.commit();
-
-        }
+//        foodupload.setOnClickListener {
+//            val gm:Fragment=GalleryFragment();
+////            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.nav_gallery,hm)?.commit()
+//            val Fragmentss: FragmentTransaction? = fragmentManager?.beginTransaction()
+//            Fragmentss?.replace(R.id.nav_home,gm);
+//            Fragmentss?.commit();
+//
+//        }
 
 
     }

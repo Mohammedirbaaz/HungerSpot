@@ -9,17 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HungerSpot">
+        <activity android:name=".VolunteerAccountViewerActivity"></activity>
+        <activity android:name=".DonorAccountViewerActivity" />
+        <activity android:name=".ContentDetailVolunteerActivity" />
         <activity
             android:name=".VolunteerSecondMainActivity"
-            android:label="@string/title_activity_volunteer_second_main"></activity>
+            android:label="@string/title_activity_volunteer_second_main" />
         <activity
             android:name=".VolunteerMainnActivity"
             android:label="@string/title_activity_volunteer_mainn"
-            android:theme="@style/Theme.HungerSpot.NoActionBar"></activity>
+            android:theme="@style/Theme.HungerSpot.NoActionBar" />
         <activity
             android:name=".VolunteerMainActivity"
             android:label="@string/title_activity_volunteer_main"
-            android:theme="@style/Theme.HungerSpot.NoActionBar"></activity>
+            android:theme="@style/Theme.HungerSpot.NoActionBar" />
         <activity
             android:name=".DonorMainActivity"
             android:label="@string/title_activity_donor_main"

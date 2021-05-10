@@ -84,20 +84,6 @@
             android:inputType="date" />
 
         <EditText
-            android:id="@+id/gendervoluntid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginBottom="5dp"
-            android:ems="10"
-            android:hint="Address"
-            android:inputType="textPostalAddress" />
-
-        <EditText
             android:id="@+id/addressvoluntid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -122,7 +108,7 @@
             android:layout_marginRight="25dp"
             android:layout_marginBottom="5dp"
             android:ems="10"
-            android:hint="Address"
+            android:hint="landmark"
             android:inputType="textPostalAddress" />
 
         <EditText
