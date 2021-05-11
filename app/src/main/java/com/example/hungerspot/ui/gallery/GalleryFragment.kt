@@ -3,6 +3,7 @@ package com.example.hungerspot.ui.gallery
 import android.app.Activity
 import android.app.ProgressDialog
 import android.app.TimePickerDialog
+import android.content.ContentResolver
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -13,6 +14,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -146,7 +148,7 @@ class GalleryFragment : Fragment() {
         var landmarkf=view?.findViewById<EditText>(R.id.idlandmarkdonor);
         var notesf=view?.findViewById<EditText>(R.id.idnotesdonor);
 
-        var imgreffs=FirebaseStorage.getInstance().reference.child("DonorContributions").child( "pic.jpg");
+        var imgreffs=FirebaseStorage.getInstance().reference.child("DonorContributions").child(userid.toString()).child("${userid.toString()+notesf.toString()}.${getExtension(filepath)}");
         imgreffs.putFile(filepath).addOnSuccessListener(object:OnSuccessListener<UploadTask.TaskSnapshot>{
             override fun onSuccess(p0: UploadTask.TaskSnapshot?) {
                 imgreffs.downloadUrl.addOnSuccessListener(object :OnSuccessListener<Uri>{
@@ -178,7 +180,11 @@ class GalleryFragment : Fragment() {
 
         })
     }
-
+    private fun getExtension(uri:Uri):String?{
+        val cr: ContentResolver?=activity?.contentResolver;
+        val mimTypeMap= MimeTypeMap.getSingleton();
+        return mimTypeMap.getExtensionFromMimeType(cr?.getType(uri))
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 

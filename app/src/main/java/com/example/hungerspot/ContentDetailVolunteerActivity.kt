@@ -135,6 +135,7 @@ class ContentDetailVolunteerActivity : AppCompatActivity() {
                             var reffs=FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(useridsn.toString()).child("Requests").push();
                             var detailsofvolunt=requests(nameforvolunt,userid,idofcontent);
                             reffs.setValue(detailsofvolunt).addOnCompleteListener {
+
                                 Toast.makeText(applicationContext,"Requested",Toast.LENGTH_SHORT).show();
                                 btnsreq.text="UnSend";
                             }

@@ -186,15 +186,12 @@ class HomeFragment : Fragment() {
                             }
                         }
                     }
-
                 })
                 holder.buttons.setOnClickListener{
                     Toast.makeText(activity,"hello "+model.ids2,Toast.LENGTH_SHORT).show();
                     val intents=Intent(activity,VolunteerAccountViewerActivity::class.java);
                     intents.putExtra("volunteerdetails",model.ids2.toString());
                     intents.putExtra("volunteerdetails2",model.idofdishes.toString());
-
-
                     startActivity(intents);
                 }
             }
