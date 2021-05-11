@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -18,6 +19,7 @@ import com.example.hungerspot.R
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
 
 class HomeFragment : Fragment() {
 
@@ -129,7 +131,7 @@ class HomeFragment : Fragment() {
                     model: orders
                 ) {
                     holder.notess.setText(model.notes);
-//                    Picasso.get().load(model.imgurl).into(holder.imgs)
+                    Picasso.get().load(model.imgurl).into(holder.imgs)
 
                     holder.from.setText(model.timefrom);
                     holder.till.setText(model.timetill);
@@ -204,7 +206,7 @@ class HomeFragment : Fragment() {
 
 
 class orderViewHolder(itemView:View,act:Activity):RecyclerView.ViewHolder(itemView) {
-//    var imgs=itemView.findViewById<ImageView>(R.id.idimage);
+    var imgs=itemView.findViewById<ImageView>(R.id.idimg);
     var notess=itemView.findViewById<TextView>(R.id.idnotess);
     var from=itemView.findViewById<TextView>(R.id.idfrom);
     var till=itemView.findViewById<TextView>(R.id.idtill);

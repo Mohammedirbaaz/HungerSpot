@@ -102,7 +102,58 @@ class DonorProcessActivity : AppCompatActivity() {
         })
 
         btnsatisfied?.setOnClickListener {
+            val reforremovalacpt=FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(userid.toString()).child("Accepts");
+            val refforremoverequest=FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(userid.toString()).child("Requests");
+            val refforreomverprocessing=FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString()).child(voluntsid.toString()).child("Processing");
 
+            reforremovalacpt.addValueEventListener(object:ValueEventListener{
+                override fun onCancelled(error: DatabaseError) {}
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (h in snapshot.children){
+                        for(k in h.children){
+                            if (k.key.toString()=="idofdish"){
+                                if(k.value.toString()==dishesids.toString()){
+                                    reforremovalacpt.child(h.key.toString()).removeValue();
+                                }
+                            }
+                        }
+
+                    }
+                }
+            })
+
+            refforremoverequest.addValueEventListener(object:ValueEventListener{
+                override fun onCancelled(error: DatabaseError) {}
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (h in snapshot.children){
+                        for(k in h.children){
+                            if (k.key.toString()=="idofdishes"){
+                                if(k.value.toString()==dishesids.toString()){
+                                    refforremoverequest.child(h.key.toString()).removeValue();
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+            })
+            refforreomverprocessing.addValueEventListener(object:ValueEventListener{
+                override fun onCancelled(error: DatabaseError) {}
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (h in snapshot.children){
+                        for(k in h.children){
+                            if (k.key.toString()=="idofdish"){
+                                if(k.value.toString()==dishesids.toString()){
+                                    refforreomverprocessing.child(h.key.toString()).removeValue();
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+            })
         }
 
 

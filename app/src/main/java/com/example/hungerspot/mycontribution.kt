@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +14,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.squareup.picasso.Picasso
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -90,8 +92,7 @@ class mycontribution : Fragment() {
                 model: Contribution
             ) {
                 holder.notess.setText(model.notes);
-//                Picasso.get().load(model.imgurl).into(holder.imgs)
-
+                Picasso.get().load(model.imgurl).into(holder.imgs)
                 holder.from.setText(model.timefrom);
                 holder.till.setText(model.timetill);
 
@@ -115,7 +116,7 @@ class mycontribution : Fragment() {
     }
 }
 class contributeViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
-//    var imgs=itemView.findViewById<ImageView>(R.id.idimage);
+    var imgs=itemView.findViewById<ImageView>(R.id.idimg);
     var notess=itemView.findViewById<TextView>(R.id.idnotess);
     var from=itemView.findViewById<TextView>(R.id.idfrom);
     var till=itemView.findViewById<TextView>(R.id.idtill);
