@@ -7,7 +7,7 @@
     android:layout_margin="10dp"
     android:layout_marginEnd="10dp"
     android:layout_marginRight="10dp"
-    app:cardBackgroundColor="#E3E3E3"
+    app:cardBackgroundColor="#FFEBE6"
     app:cardCornerRadius="20dp">
 
     <ImageView

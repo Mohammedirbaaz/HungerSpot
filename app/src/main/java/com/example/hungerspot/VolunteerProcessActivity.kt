@@ -62,6 +62,9 @@ class VolunteerProcessActivity : AppCompatActivity() {
         val pincode= list?.get(1);
         val typesofuser= list?.get(2);
 
+        this.setTitle("Delivery Details")
+
+
         val reffsfortemp=
                 FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(voluntsid.toString());
         reffsfortemp.addValueEventListener(object: ValueEventListener {
@@ -103,7 +106,6 @@ class VolunteerProcessActivity : AppCompatActivity() {
                 for (h in snapshot.children){
                     if (h.key.toString()=="dishid"){
                         if(h.value.toString()==dishesids.toString()){
-                            Toast.makeText(this@VolunteerProcessActivity,"already there",Toast.LENGTH_SHORT).show();
                             imgid1id?.visibility=View.GONE;
                             imgid2id?.visibility=View.GONE;
                             btnfiledsubmit.visibility=View.GONE;

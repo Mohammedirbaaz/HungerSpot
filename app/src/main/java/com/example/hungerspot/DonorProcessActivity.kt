@@ -31,10 +31,13 @@ class DonorProcessActivity : AppCompatActivity() {
 
 
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_donor_process);
 
+        this.setTitle("Delivery Details")
 
         var namefield=findViewById<TextView>(R.id.voluntnameproid);
         var callbtnfield=findViewById<Button>(R.id.btncallid);
@@ -55,6 +58,8 @@ class DonorProcessActivity : AppCompatActivity() {
         val userid= list?.get(0);
         val pincode= list?.get(1);
         val typesofuser= list?.get(2);
+
+
 
         val reffsfortemp=
             FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString()).child(voluntsid.toString());
@@ -77,7 +82,7 @@ class DonorProcessActivity : AppCompatActivity() {
                 for (h in snapshot.children){
                     if (h.key.toString()=="dishid"){
                         if(h.value.toString()==dishesids.toString()){
-                            Toast.makeText(this@DonorProcessActivity,"already there",Toast.LENGTH_SHORT).show();
+
                             findViewById<LinearLayout>(R.id.ldidd).visibility=View.VISIBLE;
                             imgid1idnn?.visibility= View.VISIBLE;
                             imgid2idnn?.visibility= View.VISIBLE;

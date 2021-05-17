@@ -100,10 +100,6 @@ class VolunteerLoginActivity : AppCompatActivity() {
 
                 if (userinfo == userfromdb && passwordinfo == pswdfromdb) {
 
-
-                    Toast.makeText(applicationContext, "loggedin", Toast.LENGTH_SHORT).show();
-
-
                     val user = User(Kvalue, username, Hvalue,"Volunteer");
                     val sessionManagement = SessionManagment();
                     sessionManagement.SessionManagement2(this@VolunteerLoginActivity);

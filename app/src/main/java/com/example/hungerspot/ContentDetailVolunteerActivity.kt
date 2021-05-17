@@ -5,12 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
+import kotlin.math.log
 
 class ContentDetailVolunteerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +33,8 @@ class ContentDetailVolunteerActivity : AppCompatActivity() {
         var phnoforvolunt:String?=null;
 
 
+
+
         var uploader1=findViewById<TextView>(R.id.uploadertextid2);
         var fromtime1=findViewById<TextView>(R.id.fromtextid2);
         var tilltime1=findViewById<TextView>(R.id.Tilltextid2);
@@ -39,6 +44,9 @@ class ContentDetailVolunteerActivity : AppCompatActivity() {
         var dishesname=findViewById<TextView>(R.id.dishesnameid);
 
         var btnsreq=findViewById<Button>(R.id.btnrequestid);
+
+        var imgdishes=findViewById<ImageView>(R.id.imgdishesid);
+
 
 
 
@@ -54,9 +62,14 @@ class ContentDetailVolunteerActivity : AppCompatActivity() {
         val pincode= list?.get(1);
         val typesofuser= list?.get(2);
 
+        this.setTitle("Dishes detail");
+
+
+
         val intents2=intent;
         val idofcontent=intents2.getStringExtra("productid");
         val namofcontent=FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child("MyContribution@@").child(idofcontent.toString());
+
         namofcontent.addValueEventListener(object:ValueEventListener{
             override fun onCancelled(error: DatabaseError) {}
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -64,10 +77,19 @@ class ContentDetailVolunteerActivity : AppCompatActivity() {
                     if(h.key.toString()=="notes"){
                         dishesname.text=h.value.toString();
                     }
+                    else if(h.key.toString()=="imgurl"){
+                        Picasso.get().load(h.value.toString()).into(imgdishes);
+                    }
                 }
             }
 
         })
+
+
+
+
+
+
         Log.i("chhh",idofcontent.toString()+userid.toString()+pincode.toString()+typesofuser.toString());
 
         val reffs=FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child("MyContribution@@").child(idofcontent.toString());
@@ -116,6 +138,8 @@ class ContentDetailVolunteerActivity : AppCompatActivity() {
 
         })
 
+
+
         uploader1.setOnClickListener {
             val intss=Intent(this,DonorAccountViewerActivity::class.java);
             intss.putExtra("donordetails",useridsn.toString());
@@ -136,7 +160,6 @@ class ContentDetailVolunteerActivity : AppCompatActivity() {
                             var detailsofvolunt=requests(nameforvolunt,userid,idofcontent);
                             reffs.setValue(detailsofvolunt).addOnCompleteListener {
 
-                                Toast.makeText(applicationContext,"Requested",Toast.LENGTH_SHORT).show();
                                 btnsreq.text="UnSend";
                             }
                         }
@@ -144,6 +167,11 @@ class ContentDetailVolunteerActivity : AppCompatActivity() {
                 }
             })
         }
+
+
+
+
+
 
 
 

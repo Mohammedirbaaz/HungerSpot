@@ -27,6 +27,8 @@ lateinit var reffsfinal:DatabaseReference;
 
         var didnthaveacnt=findViewById<TextView>(R.id.donthaveacnt);
 
+
+
         didnthaveacnt.setOnClickListener {
             var intent3=Intent(this,DonorRegisterActivity::class.java);
             startActivity(intent3);
@@ -39,7 +41,6 @@ lateinit var reffsfinal:DatabaseReference;
                 override fun onCancelled(error: DatabaseError) {}
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (h in snapshot.children){
-//                    Toast.makeText(this@DonorRegisterActivity,h.toString(),Toast.LENGTH_SHORT).show()
                         Log.i("checksss",h.key.toString());
                         val reffs2=FirebaseDatabase.getInstance().getReference("Donor").child(h.key.toString());
                         reffs2.addValueEventListener(object:ValueEventListener{
@@ -109,11 +110,6 @@ lateinit var reffsfinal:DatabaseReference;
 
                 if(userinfo==userfromdb && passwordinfo==pswdfromdb){
 
-
-
-                    Toast.makeText(applicationContext,"loggedin",Toast.LENGTH_SHORT).show();
-
-
                     val user= User(Kvalue,username, Hvalue,"Donor");
                     val sessionManagement = SessionManagment();
                     sessionManagement.SessionManagement2(this@DonorLoginActivity);
@@ -126,43 +122,14 @@ lateinit var reffsfinal:DatabaseReference;
                     Toast.makeText(applicationContext,"userid or password is incorrect",Toast.LENGTH_SHORT).show();
 
                 }
-
-
             }
-
             override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Post failed, log a message
                 Log.w("firebase", "loadPost:onCancelled", databaseError.toException())
             }
         })
     }
 
-    override fun onStart() {
-        super.onStart();
 
-//        val sessionManagement = SessionManagment();
-//        sessionManagement.SessionManagement2(this);
-//        var useridsss=sessionManagement.getSession();
-//        val ff="||";
-//        val list1= useridsss?.split(ff);
-//        val userid1= list1?.get(0);
-//        val pincode1= list1?.get(1);
-//        val typesofuser1= list1?.get(2);
-//
-//        if(list1!=null) {
-//            if (userid1 != null) {
-//                Log.i("idss", userid1)
-//            };
-//
-//            if (userid1 != " " && typesofuser1 != " " && pincode1 != " ") {
-//                if (typesofuser1 == "Donor") {
-//                    movetomainactivity();
-//                }
-//            }
-//        }else{
-//            Toast.makeText(this,"dfdf",Toast.LENGTH_SHORT).show()
-//        }
-    }
     fun movetomainactivity(){
         val intent:Intent= Intent(this,DonorMainActivity::class.java);
         startActivity(intent);

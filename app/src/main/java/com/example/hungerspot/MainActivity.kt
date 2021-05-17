@@ -1,18 +1,16 @@
 package com.example.hungerspot
 
+
+
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
-import android.widget.Toast
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.android.material.navigation.NavigationView
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,10 +24,7 @@ class MainActivity : AppCompatActivity() {
         var useridsss=sessionManagement.getSession();
         val ff="||";
         val list= useridsss?.split(ff);
-//        val userid= list?.get(0);
-//        val pincode= list?.get(1);
-//        val typesofuser= list?.get(2);
-//Toast.makeText(this,userid+" "+pincode+" "+typesofuser,Toast.LENGTH_LONG).show()
+
 
         var donorbtn=findViewById<Button>(R.id.donorbtnid);
         var volunteerbtn=findViewById<Button>(R.id.volunteerbtnid);
@@ -42,17 +37,15 @@ class MainActivity : AppCompatActivity() {
             var intent2=Intent(this,VolunteerLoginActivity::class.java);
             startActivity(intent2);
         }
-//        val intentss=intent.getStringExtra("secret1");
-//        if(intentss=="toquit"){
-//            finish()
-//        }
+
+
+
 
 
 
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }

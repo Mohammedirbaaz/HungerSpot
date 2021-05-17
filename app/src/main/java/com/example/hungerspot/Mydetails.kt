@@ -20,18 +20,13 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import org.w3c.dom.Text
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [Mydetails.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class Mydetails : Fragment() {
-    // TODO: Rename and change types of parameters
+
     private var param1: String? = null
     private var param2: String? = null
 
@@ -75,7 +70,6 @@ class Mydetails : Fragment() {
 
 
         if(typesofuser=="Donor") {
-            Toast.makeText(activity, useridsss.toString(), Toast.LENGTH_SHORT).show();
             var reffs =
                 FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString())
                     .child(userid.toString());
@@ -156,7 +150,6 @@ class Mydetails : Fragment() {
 
         logoutbtnss.setOnClickListener {
             sessionManagement.removeSession();
-            Toast.makeText(activity,"Successfully logouted!!",Toast.LENGTH_SHORT).show();
             var intentn=Intent(activity,DonorLoginActivity::class.java);
             startActivity(intentn);
 

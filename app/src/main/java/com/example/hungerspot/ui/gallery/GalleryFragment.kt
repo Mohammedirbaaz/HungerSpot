@@ -56,6 +56,7 @@ class GalleryFragment : Fragment() {
 
 
 
+
         val btnfrom=view.findViewById<Button>(R.id.btntimefrom);
         val btntill=view.findViewById<Button>(R.id.btnidtimetill);
         val textdatefrom=view.findViewById<TextView>(R.id.idtimefrom);
@@ -133,7 +134,7 @@ class GalleryFragment : Fragment() {
                 for(h in snapshot.children){
                     if(h.key.toString()=="name"){
                         usernameforuploads=h.value.toString();
-                        Toast.makeText(activity,usernameforuploads.toString(),Toast.LENGTH_SHORT).show();
+
                         Log.i("ccc",usernameforuploads.toString());
 
                     }

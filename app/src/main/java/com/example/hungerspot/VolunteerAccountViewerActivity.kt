@@ -29,6 +29,8 @@ class VolunteerAccountViewerActivity : AppCompatActivity() {
         var btnaccept=findViewById<Button>(R.id.btnforacceptid);
         var btnreject=findViewById<Button>(R.id.btnforrejectid);
 
+        this.setTitle("Volunteer Details");
+
 
         val sessionManagement = SessionManagment();
         sessionManagement.SessionManagement2(this) ;
@@ -116,7 +118,7 @@ class VolunteerAccountViewerActivity : AppCompatActivity() {
                                 Log.i("abdekh",k.key.toString());
                                 if(k.value.toString()==idofdishes.toString()){
                                     reffss3.child(h.key.toString()).removeValue();
-                                    Toast.makeText(this@VolunteerAccountViewerActivity,"Rejected",Toast.LENGTH_SHORT).show();
+
                                 }
                             }
                         }
@@ -133,8 +135,6 @@ class VolunteerAccountViewerActivity : AppCompatActivity() {
         var nameofvo=nameofvo1;
         val details=accepts(idofdishe1.toString(),idofvo1.toString(),nameofvo1);
         reffsforac.setValue(details).addOnCompleteListener {
-
-            Toast.makeText(this@VolunteerAccountViewerActivity,"Request Accepted", Toast.LENGTH_SHORT).show();
         }
     }
     fun processdetails(idofdis:String?,useri:String?,pinc:String?,idofvo:String?){
@@ -147,7 +147,6 @@ class VolunteerAccountViewerActivity : AppCompatActivity() {
         val acceptpost=accepts(idofdis.toString(),useri.toString(),nameofdonor);
         val voluntprocess=FirebaseDatabase.getInstance().getReference("Volunteer").child(pinc.toString()).child(idofvo.toString()).child("Processing").push();
         voluntprocess.setValue(acceptpost).addOnCompleteListener {
-            Toast.makeText(this@VolunteerAccountViewerActivity,"Reques accepted",Toast.LENGTH_SHORT).show();
 
         }
     }

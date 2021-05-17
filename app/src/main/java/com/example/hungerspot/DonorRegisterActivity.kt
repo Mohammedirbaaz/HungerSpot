@@ -73,7 +73,6 @@ class DonorRegisterActivity : AppCompatActivity() {
                 val stremail=email.text.toString();
                 var emailsplitter=stremail.indexOf("@");
                 val finalstring=stremail.substring(0,emailsplitter);
-//                 Toast.makeText(this,finalstring,Toast.LENGTH_SHORT).show();
 
 
 

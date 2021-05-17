@@ -16,28 +16,26 @@
         <activity android:name=".VolunteerAccountViewerActivity" />
         <activity android:name=".DonorAccountViewerActivity" />
         <activity android:name=".ContentDetailVolunteerActivity" />
-        <activity
-            android:name=".VolunteerSecondMainActivity"
-            android:label="@string/title_activity_volunteer_second_main" />
-        <activity
-            android:name=".VolunteerMainnActivity"
-            android:label="@string/title_activity_volunteer_mainn"
-            android:theme="@style/Theme.HungerSpot.NoActionBar" />
-        <activity
-            android:name=".VolunteerMainActivity"
-            android:label="@string/title_activity_volunteer_main"
-            android:theme="@style/Theme.HungerSpot.NoActionBar" />
+
+<!--        <activity-->
+<!--            android:name=".VolunteerMainnActivity"-->
+<!--            android:label="@string/title_activity_volunteer_mainn"-->
+<!--            android:theme="@style/Theme.HungerSpot.NoActionBar" />-->
+<!--        <activity-->
+<!--            android:name=".VolunteerMainActivity"-->
+<!--            android:label="@string/title_activity_volunteer_main"-->
+<!--            android:theme="@style/Theme.HungerSpot.NoActionBar" />-->
         <activity
             android:name=".DonorMainActivity"
             android:label="@string/title_activity_donor_main"
             android:theme="@style/Theme.HungerSpot.NoActionBar" />
-        <activity android:name=".VolunteerFoodDelivered" />
-        <activity android:name=".VolunteerSendRequestActivity" />
+<!--        <activity android:name=".VolunteerFoodDelivered" />-->
+<!--        <activity android:name=".VolunteerSendRequestActivity" />-->
         <activity android:name=".VolunteerLoginActivity" />
         <activity android:name=".VolunteerRegisterActivity" />
-        <activity android:name=".DonorVolunteerBioActivity" />
-        <activity android:name=".DonorRequestActivity" />
-        <activity android:name=".DonorFoodUploadActivity" />
+<!--        <activity android:name=".DonorVolunteerBioActivity" />-->
+<!--        <activity android:name=".DonorRequestActivity" />-->
+<!--        <activity android:name=".DonorFoodUploadActivity" />-->
         <activity android:name=".DonorLoginActivity" />
         <activity android:name=".DonorRegisterActivity" />
         <activity

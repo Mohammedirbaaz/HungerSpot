@@ -8,19 +8,19 @@
     <fragment
         android:id="@+id/nav_home2"
         android:name="com.example.hungerspot.ui.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:label="Home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_gallery"
         android:name="com.example.hungerspot.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
+        android:label="Food Upload"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.example.hungerspot.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
+        android:label="Processing"
         tools:layout="@layout/fragment_slideshow" />
     <fragment
         android:id="@+id/nav_mycontribution"
@@ -30,7 +30,7 @@
     <fragment
         android:id="@+id/nav_mydetail"
         android:name="com.example.hungerspot.Mydetails"
-        android:label="fragment_mydetails"
+        android:label="My Details"
         tools:layout="@layout/fragment_mydetails" />
     <fragment
         android:id="@+id/nav_home_volunteer"

@@ -18,8 +18,10 @@ import com.example.hungerspot.*
 import com.example.hungerspot.R
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
+
 
 class HomeFragment : Fragment() {
 
@@ -55,6 +57,8 @@ class HomeFragment : Fragment() {
         val userid= list?.get(0);
         val pincode= list?.get(1);
         val typesofuser= list?.get(2);
+
+
 
 //        var foodupload=view.findViewById<Button>(R.id.idfooduploadbtn)
 //        var request=view.findViewById<Button>(R.id.idrequests)

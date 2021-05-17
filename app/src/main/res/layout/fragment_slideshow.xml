@@ -13,12 +13,12 @@
         android:id="@+id/accept_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#434343"
+        android:background="#ECFBF6"
         android:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/accept_layout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FB5A5A" />
+        android:background="#ECFBF6" />
 </LinearLayout>

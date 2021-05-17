@@ -47,13 +47,13 @@
         android:id="@+id/idlistview3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#A6A1A1" />
+        android:background="#ECFBF6" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/idlistview2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#EC8888"
+        android:background="#ECFBF6"
         android:visibility="visible" />
 
 </LinearLayout>

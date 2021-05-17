@@ -57,9 +57,6 @@ class VolunteerRegisterActivity : AppCompatActivity() {
                 val stremail=emails.text.toString();
                 var emailsplitter=stremail.indexOf("@");
                 val finalstring=stremail.substring(0,emailsplitter);
-//                 Toast.makeText(this,finalstring,Toast.LENGTH_SHORT).show();
-
-
 
                 reffs.child(pincodesn).child(finalstring).setValue(donorreg).addOnCompleteListener{
                     Toast.makeText(this,"Registered Successfully", Toast.LENGTH_SHORT).show();

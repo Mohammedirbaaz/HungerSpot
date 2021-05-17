@@ -1,20 +1,24 @@
 package com.example.hungerspot
 
+
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.widget.Toast
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import com.google.android.material.navigation.NavigationView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
+import com.google.android.material.navigation.NavigationView
+import com.google.firebase.database.*
+
 
 class DonorMainActivity : AppCompatActivity() {
 
@@ -38,7 +42,6 @@ class DonorMainActivity : AppCompatActivity() {
 
 
 
-//            Toast.makeText(this,typesofuser,Toast.LENGTH_SHORT).show();
 
             val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
             val navView: NavigationView = findViewById(R.id.nav_view)
@@ -50,8 +53,42 @@ class DonorMainActivity : AppCompatActivity() {
             setupActionBarWithNavController(navController, appBarConfiguration)
             navView.setupWithNavController(navController);
 
+        val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
+        val hView = navigationView.getHeaderView(0)
 
 
+//        val nav_icons=hView2.findViewById<View>(R.id.nav_home2) as ClipData.Item;
+
+        val nav_user_name = hView.findViewById<View>(R.id.navpageaccounternameid) as TextView
+        val nav_user_type = hView.findViewById<View>(R.id.navpageaccountertypeid) as TextView
+
+        var reffsff:DatabaseReference?=null;
+
+        if(typesofuser=="Donor") {
+            reffsff = FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(userid.toString());
+            nav_user_type.text="Donor";
+
+        }else if(typesofuser=="Volunteer"){
+            reffsff = FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString()).child(userid.toString());
+            nav_user_type.text="Volunteer";
+            val menu = navigationView.menu
+            menu.findItem(R.id.nav_gallery).setVisible(false);
+            menu.findItem(R.id.nav_mycontribution).setVisible(false);
+
+        }
+
+
+
+        reffsff?.addValueEventListener(object:ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (h in snapshot.children){
+                    if (h.key.toString()=="name"){
+                        nav_user_name.text=h.value.toString();
+                    }
+                }
+            }
+        })
     }
     override fun onBackPressed(){
 
@@ -80,6 +117,14 @@ class DonorMainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+//    override fun onPre(menu: Menu?): Boolean {
+//        if (menu != null) {
+//            Log.i("oppmenu",menu.get(0).title.toString())
+//        };
+//
+//        return super.onPrepareOptionsMenu(menu)
+//    }
 
 
 }
