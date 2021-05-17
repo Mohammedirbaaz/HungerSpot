@@ -4,8 +4,10 @@ package com.example.hungerspot
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +20,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
 
 
 class DonorMainActivity : AppCompatActivity() {
@@ -61,6 +64,7 @@ class DonorMainActivity : AppCompatActivity() {
 
         val nav_user_name = hView.findViewById<View>(R.id.navpageaccounternameid) as TextView
         val nav_user_type = hView.findViewById<View>(R.id.navpageaccountertypeid) as TextView
+        var nav_user_dpimage= hView.findViewById<View>(R.id.navpageaccountdpid) as ImageView
 
         var reffsff:DatabaseReference?=null;
 
@@ -77,6 +81,21 @@ class DonorMainActivity : AppCompatActivity() {
 
         }
 
+
+        var reffs22 =
+                FirebaseDatabase.getInstance().getReference(typesofuser.toString()).child(pincode.toString()).child(userid.toString()).child("Mydp");
+        reffs22.addValueEventListener(object:ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (h in snapshot.children){
+                    Log.i("paths",h.key.toString())
+                    if (h.key.toString()=="mydp"){
+                        var imgurl=h.value.toString()
+                        Picasso.get().load(imgurl).into(nav_user_dpimage);
+                    }
+                }
+            }
+        })
 
 
         reffsff?.addValueEventListener(object:ValueEventListener{

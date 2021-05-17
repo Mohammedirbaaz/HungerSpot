@@ -144,6 +144,7 @@ class HomeFragment : Fragment() {
                     holder.notess.setOnClickListener{
                         val intents=Intent(context,ContentDetailVolunteerActivity::class.java);
                         intents.putExtra("productid",getRef(position).key);
+
                         startActivity(intents);
 //                        Toast.makeText(activity,"you selected "+getRef(position).key,Toast.LENGTH_SHORT).show();
                     }

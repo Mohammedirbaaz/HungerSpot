@@ -19,7 +19,7 @@
             android:layout_marginStart="100dp"
             android:layout_marginLeft="100dp"
             android:layout_marginTop="50dp"
-            android:maxWidth="150dp"
+            android:maxWidth="200dp"
             android:maxHeight="150dp"
             android:src="@drawable/ic_launcher_background" />
 

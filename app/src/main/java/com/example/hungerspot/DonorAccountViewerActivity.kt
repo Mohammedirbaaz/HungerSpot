@@ -4,11 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
 
 class DonorAccountViewerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +30,22 @@ class DonorAccountViewerActivity : AppCompatActivity() {
         val intentsss=intent;
         val donorids=intentsss.getStringExtra("donordetails");
         this.setTitle("Donor Details");
+        var uploaderdp=findViewById<ImageView>(R.id.uploaderdpid);
+
+
+        var reffs223 = FirebaseDatabase.getInstance().getReference(typesofuser.toString()).child(pincode.toString()).child(userid.toString()).child("Mydp");
+        reffs223.addValueEventListener(object:ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (h in snapshot.children){
+                    Log.i("paths",h.key.toString())
+                    if (h.key.toString()=="mydp"){
+                        var imgurl=h.value.toString()
+                        Picasso.get().load(imgurl).into(uploaderdp);
+                    }
+                }
+            }
+        })
 
         val reffs22=FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(donorids.toString());
         reffs22.addValueEventListener(object:ValueEventListener{

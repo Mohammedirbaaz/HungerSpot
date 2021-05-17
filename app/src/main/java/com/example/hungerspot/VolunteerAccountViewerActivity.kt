@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
 
 class VolunteerAccountViewerActivity : AppCompatActivity() {
 
@@ -28,6 +30,7 @@ class VolunteerAccountViewerActivity : AppCompatActivity() {
 
         var btnaccept=findViewById<Button>(R.id.btnforacceptid);
         var btnreject=findViewById<Button>(R.id.btnforrejectid);
+        var volunterdp=findViewById<ImageView>(R.id.volunteerdpids);
 
         this.setTitle("Volunteer Details");
 
@@ -45,6 +48,23 @@ class VolunteerAccountViewerActivity : AppCompatActivity() {
         val intents3=intent;
         val idofvolunt=intents3.getStringExtra("volunteerdetails");
         val idofdishes=intents3.getStringExtra("volunteerdetails2");
+
+        var reffs22 =
+                FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString()).child(idofvolunt.toString()).child("Mydp");
+        reffs22.addValueEventListener(object:ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                Log.i("path2223s","dfdfdfdfdfdfdfdf")
+
+                for (h in snapshot.children){
+                    Log.i("path222s",h.key.toString())
+                    if (h.key.toString()=="mydp"){
+                        var imgurl=h.value.toString()
+                        Picasso.get().load(imgurl).into(volunterdp);
+                    }
+                }
+            }
+        })
 
         var reffs= FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString()).child(idofvolunt.toString());
         reffs.addValueEventListener(object: ValueEventListener {
