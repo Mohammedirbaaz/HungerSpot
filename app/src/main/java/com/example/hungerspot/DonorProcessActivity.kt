@@ -28,6 +28,9 @@ class DonorProcessActivity : AppCompatActivity() {
     var imguri1:Uri?=null;
     var imguri2:Uri?=null;
 
+    var ratedc:Int?=0;
+    var avgc:Float?=0F;
+
 
 
 
@@ -48,6 +51,14 @@ class DonorProcessActivity : AppCompatActivity() {
         imgid2idnn=findViewById(R.id.imgproid2);
         btnsatisfied=findViewById(R.id.btnsatisfiedid);
         btnnotsatisfied=findViewById(R.id.btnunsatisfied);
+
+        findViewById<LinearLayout>(R.id.ldidd).visibility=View.GONE;
+        imgid1idnn?.visibility= View.GONE;
+        imgid2idnn?.visibility= View.GONE;
+        btnsatisfied?.visibility= View.GONE;
+        btnnotsatisfied?.visibility=View.GONE;
+        findViewById<TextView>(R.id.didntsuplytxtid).visibility=View.VISIBLE;
+
 
 
         val sessionManagement = SessionManagment();
@@ -80,26 +91,31 @@ class DonorProcessActivity : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {}
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (h in snapshot.children){
-                    if (h.key.toString()=="dishid"){
-                        if(h.value.toString()==dishesids.toString()){
 
-                            findViewById<LinearLayout>(R.id.ldidd).visibility=View.VISIBLE;
-                            imgid1idnn?.visibility= View.VISIBLE;
-                            imgid2idnn?.visibility= View.VISIBLE;
-                            btnsatisfied?.visibility= View.VISIBLE;
-                            btnnotsatisfied?.visibility=View.VISIBLE;
-                            findViewById<TextView>(R.id.didntsuplytxtid).visibility=View.GONE
+                    for(k in h.children){
+                        if (k.key.toString()=="dishid"){
+                            if(k.value.toString()==dishesids.toString()){
+
+                                Toast.makeText(this@DonorProcessActivity,k.key.toString(),Toast.LENGTH_SHORT).show()
+                                findViewById<LinearLayout>(R.id.ldidd).visibility=View.VISIBLE;
+                                imgid1idnn?.visibility= View.VISIBLE;
+                                imgid2idnn?.visibility= View.VISIBLE;
+                                btnsatisfied?.visibility= View.VISIBLE;
+                                btnnotsatisfied?.visibility=View.VISIBLE;
+                                findViewById<TextView>(R.id.didntsuplytxtid).visibility=View.GONE;
+                            }
                         }
-                    }else if(h.key.toString()=="imgurl1"){
-                        imguri1=h.value.toString().toUri();
-                        Log.i("sdfdfdf",imguri1.toString());
-                        Picasso.get().load(imguri1).into(imgid1idnn);
+                        else if(k.key.toString()=="imgurl1"){
+                            imguri1=k.value.toString().toUri();
+                            Log.i("sdfdfdf",imguri1.toString());
+                            Picasso.get().load(imguri1).into(imgid1idnn);
+                        }
+                        else if(k.key.toString()=="imgurl2"){
+                            imguri2=k.value.toString().toUri();
+                            Log.i("sdfdfdf2",imguri2.toString());
+                            Picasso.get().load(imguri2).into(imgid2idnn);
+                        }
 
-                    }
-                    else if(h.key.toString()=="imgurl2"){
-                        imguri2=h.value.toString().toUri();
-                        Log.i("sdfdfdf2",imguri2.toString());
-                        Picasso.get().load(imguri2).into(imgid2idnn);
                     }
                 }
             }
@@ -107,6 +123,54 @@ class DonorProcessActivity : AppCompatActivity() {
         })
 
         btnsatisfied?.setOnClickListener {
+            var ratingb=findViewById<RatingBar>(R.id.ratingbarid);
+            var ratingcounts: Float = 0F;
+            ratingcounts=ratingb.rating;
+            val refforrating=FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString()).child(voluntsid.toString()).child("Ratings@@");
+            refforrating.addValueEventListener(object :ValueEventListener{
+                override fun onCancelled(error: DatabaseError) {}
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (h in snapshot.children){
+                        if(h.key.toString()=="noofclient") {
+                            ratedc=h.value.toString().toInt();
+                        }
+                        if(h.key.toString()=="avgrating"){
+                            avgc=h.value.toString().toFloat();
+                        }
+                    }
+                }
+            })
+
+            var ratedint: Int? =ratedc;
+            if (ratedint != null) {
+                ratedint=ratedint+1
+            }
+            Toast.makeText(this,ratedint.toString(),Toast.LENGTH_SHORT).show();
+
+            var avgint:Float?= avgc;
+            if (avgint != null) {
+                avgint=avgint+ratingcounts
+            }
+            Toast.makeText(this,avgint.toString(),Toast.LENGTH_SHORT).show();
+
+
+            val insertratingdata=satisfiedclient(ratedint.toString(),avgint.toString());
+            refforrating.setValue(insertratingdata).addOnCompleteListener {
+                Toast.makeText(this,avgint.toString(),Toast.LENGTH_SHORT).show();
+                Log.i("ratingwork",ratedint.toString()+avgint.toString());
+            }
+
+
+
+
+
+
+
+
+
+
+
+
             val reforremovalacpt=FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(userid.toString()).child("Accepts");
             val refforremoverequest=FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(userid.toString()).child("Requests");
             val refforreomverprocessing=FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString()).child(voluntsid.toString()).child("Processing");

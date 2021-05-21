@@ -125,6 +125,25 @@ class VolunteerAccountViewerActivity : AppCompatActivity() {
                 }
 
             })
+            val reffss3=FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(userid.toString()).child("Requests");
+            reffss3.addValueEventListener(object:ValueEventListener{
+                override fun onCancelled(error: DatabaseError) {}
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (h in snapshot.children){
+                        for(k in h.children){
+                            if (k.key.toString()=="idofdishes"){
+                                Log.i("abdekh",k.key.toString());
+                                if(k.value.toString()==idofdishes.toString()){
+                                    reffss3.child(h.key.toString()).removeValue();
+
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+            })
 
         }
         btnreject.setOnClickListener{
@@ -155,6 +174,7 @@ class VolunteerAccountViewerActivity : AppCompatActivity() {
         var nameofvo=nameofvo1;
         val details=accepts(idofdishe1.toString(),idofvo1.toString(),nameofvo1);
         reffsforac.setValue(details).addOnCompleteListener {
+            Toast.makeText(this,"Accecpted",Toast.LENGTH_SHORT).show();
         }
     }
     fun processdetails(idofdis:String?,useri:String?,pinc:String?,idofvo:String?){

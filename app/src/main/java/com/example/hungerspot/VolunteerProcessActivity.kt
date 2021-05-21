@@ -138,8 +138,8 @@ class VolunteerProcessActivity : AppCompatActivity() {
                                         override fun onSuccess(p1: Uri?) {
                                             imgurl2=p1.toString();
                                             val finished1=workfinish(imgurl,imgurl2,voluntsid.toString(),dishesids.toString(),userid.toString());
-                                            val finishondonorref=FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(voluntsid.toString()).child("Finishedwork@");
-                                            val finishonvoluntref=FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString()).child(userid.toString()).child("Finishedwork@");
+                                            val finishondonorref=FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(voluntsid.toString()).child("Finishedwork@").push();
+                                            val finishonvoluntref=FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString()).child(userid.toString()).child("Finishedwork@").push();
                                             finishondonorref.setValue(finished1).addOnSuccessListener {
                                             }
                                             finishonvoluntref.setValue(finished1).addOnSuccessListener {

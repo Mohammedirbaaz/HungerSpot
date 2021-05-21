@@ -57,14 +57,14 @@ class Mydetails : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         var namess=view.findViewById<TextView>(R.id.idname);
-        var emailss=view.findViewById<EditText>(R.id.idemail);
-        var addresss=view.findViewById<EditText>(R.id.idaddress);
-        var landmarks=view.findViewById<EditText>(R.id.idlandmark);
-        var phnoss=view.findViewById<EditText>(R.id.idphno);
-        var pincodess=view.findViewById<EditText>(R.id.idpincode);
+        var emailss=view.findViewById<TextView>(R.id.idemail);
+        var addresss=view.findViewById<TextView>(R.id.idaddress);
+        var landmarks=view.findViewById<TextView>(R.id.idlandmark);
+        var phnoss=view.findViewById<TextView>(R.id.idphno);
+        var pincodess=view.findViewById<TextView>(R.id.idpincode);
         var logoutbtnss=view.findViewById<Button>(R.id.idlogoutbtn)
         var dpimage= view.findViewById<ImageView>(R.id.imgfordpid);
-        var btnuploads=view.findViewById<Button>(R.id.imageuploadbtnid)
+        var btnuploads=view.findViewById<Button>(R.id.imageuploadbtnid);
 
 
 
@@ -105,19 +105,19 @@ class Mydetails : Fragment() {
                             namess.text = h.value.toString();
                         } else if (h.key.toString() == "email") {
                             emailss.text =
-                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                                h.value.toString();
                         } else if (h.key.toString() == "address") {
                             addresss.text =
-                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                                h.value.toString();
                         } else if (h.key.toString() == "landmark") {
                             landmarks.text =
-                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                                h.value.toString();
                         } else if (h.key.toString() == "phno") {
                             phnoss.text =
-                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                                h.value.toString();
                         } else if (h.key.toString() == "pincode") {
                             pincodess.text =
-                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                                h.value.toString();
                         }
 
                     }
@@ -126,7 +126,7 @@ class Mydetails : Fragment() {
             })
         }else if(typesofuser=="Volunteer"){
 
-            var dob=view.findViewById<EditText>(R.id.iddobs)
+            var dob=view.findViewById<TextView>(R.id.iddobs)
             dob.visibility=View.VISIBLE;
 
             var reffs =
@@ -142,23 +142,23 @@ class Mydetails : Fragment() {
                             namess.text = h.value.toString();
                         } else if (h.key.toString() == "email") {
                             emailss.text =
-                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                                h.value.toString();
                         } else if (h.key.toString() == "address") {
                             addresss.text =
-                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                                h.value.toString();
                         } else if (h.key.toString() == "landmark") {
                             landmarks.text =
-                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                               h.value.toString();
                         } else if (h.key.toString() == "phno") {
                             phnoss.text =
-                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                                h.value.toString();
                         } else if (h.key.toString() == "pincode") {
                             pincodess.text =
-                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                                h.value.toString();
                         }
                         else if (h.key.toString() == "dob") {
                             dob.text =
-                                Editable.Factory.getInstance().newEditable(h.value.toString());
+                                h.value.toString();
                         }
                     }
                 }

@@ -32,6 +32,8 @@ class ContentDetailVolunteerActivity : AppCompatActivity() {
         var nameforvolunt:String?=null;
         var phnoforvolunt:String?=null;
 
+        var myname:String?=null;
+
 
 
 
@@ -147,6 +149,15 @@ class ContentDetailVolunteerActivity : AppCompatActivity() {
             startActivity(intss)
         }
 
+        val reffss=FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString()).child(userid.toString()).child("name");
+        reffss.addValueEventListener(object:ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                myname=snapshot.value.toString();
+                Toast.makeText(this@ContentDetailVolunteerActivity,myname.toString(),Toast.LENGTH_SHORT).show();
+            }
+
+        })
         btnsreq.setOnClickListener{
 
             var mydetailss=FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString()).child(userid.toString());
@@ -159,31 +170,24 @@ class ContentDetailVolunteerActivity : AppCompatActivity() {
                             var reffs=FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(useridsn.toString()).child("Requests").push();
                             var detailsofvolunt=requests(nameforvolunt,userid,idofcontent);
                             reffs.setValue(detailsofvolunt).addOnCompleteListener {
-
                                 btnsreq.text="UnSend";
+                                Log.i("userids",userid.toString())
+                                Toast.makeText(this@ContentDetailVolunteerActivity,"Requested "+userid.toString(),Toast.LENGTH_SHORT).show();
+                                val userss= myname?.let { it1 -> User(userid.toString(), it1, pincode.toString(),"Volunteer") };
+                                val sessionManagement = SessionManagment();
+                                sessionManagement.SessionManagement2(this@ContentDetailVolunteerActivity);
+                                if (userss != null) {
+                                    sessionManagement.saveSession(userss)
+                                };
+                                val intent:Intent= Intent(this@ContentDetailVolunteerActivity,DonorMainActivity::class.java);
+                                startActivity(intent);
                             }
                         }
                     }
                 }
             })
         }
-
-
-
-
-
-
-
-
-
-
     }
-
-
-
-
-
-
 }
 
 class requests(var names:String?,var ids2:String?,var idofdishes:String?);
