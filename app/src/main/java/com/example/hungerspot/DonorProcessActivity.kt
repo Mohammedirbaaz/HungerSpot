@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -31,6 +32,10 @@ class DonorProcessActivity : AppCompatActivity() {
     var ratedc:Int?=0;
     var avgc:Float?=0F;
 
+
+
+    var ratedint: Int?=0;
+    var avgint:Float?=0F;
 
 
 
@@ -121,50 +126,70 @@ class DonorProcessActivity : AppCompatActivity() {
             }
 
         })
+        btnnotsatisfied?.setOnClickListener {
+
+        }
 
         btnsatisfied?.setOnClickListener {
+
             var ratingb=findViewById<RatingBar>(R.id.ratingbarid);
-            var ratingcounts: Float = 0F;
-            ratingcounts=ratingb.rating;
+
+
+            var ratingcounts=ratingb.rating;
+
+
             val refforrating=FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString()).child(voluntsid.toString()).child("Ratings@@");
-            refforrating.addValueEventListener(object :ValueEventListener{
-                override fun onCancelled(error: DatabaseError) {}
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (h in snapshot.children){
-                        if(h.key.toString()=="noofclient") {
-                            ratedc=h.value.toString().toInt();
+
+            Handler().postDelayed({
+                refforrating.addValueEventListener(object :ValueEventListener{
+                    override fun onCancelled(error: DatabaseError) {}
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        Log.i("snapshotva",snapshot.key.toString());
+
+                        if (snapshot.key.toString()=="Ratings@@"){
+                            Log.i("availabley","yes");
+                            for (h in snapshot.children){
+
+                                if(h.key.toString()=="noofclient") {
+                                    ratedc=h.value.toString().toInt();
+                                    ratedint=ratedc;
+                                    Log.i("b11",ratedint.toString());
+                                    ratedint= ratedint?.plus(1);
+                                    Log.i("b12",ratedint.toString());
+
+
+                                }
+                                else if(h.key.toString()=="avgrating"){
+                                    avgc=h.value.toString().toFloat();
+                                    avgint= avgc;
+                                    avgint= avgint?.plus(ratingcounts)
+
+                                }
+                            }
+                        }else if(snapshot.key.toString() !="Ratings@@"){
+                            Log.i("availablen","no");
+
+                            ratedint= ratedint?.plus(1);
+                            avgint= avgint?.plus(ratingcounts)
+
                         }
-                        if(h.key.toString()=="avgrating"){
-                            avgc=h.value.toString().toFloat();
-                        }
+
                     }
+                })
+                Log.i("before",ratedint.toString()+avgint.toString());
+
+            },1000)
+
+
+
+            Handler().postDelayed({
+                val insertratingdata=satisfiedclient(ratedint.toString(),avgint.toString());
+                refforrating.setValue(insertratingdata).addOnCompleteListener {
+                    Log.i("ratingwork",ratedint.toString()+avgint.toString());
                 }
-            })
-
-            var ratedint: Int? =ratedc;
-            if (ratedint != null) {
-                ratedint=ratedint+1
-            }
-            Toast.makeText(this,ratedint.toString(),Toast.LENGTH_SHORT).show();
-
-            var avgint:Float?= avgc;
-            if (avgint != null) {
-                avgint=avgint+ratingcounts
-            }
-            Toast.makeText(this,avgint.toString(),Toast.LENGTH_SHORT).show();
-
-
-            val insertratingdata=satisfiedclient(ratedint.toString(),avgint.toString());
-            refforrating.setValue(insertratingdata).addOnCompleteListener {
-                Toast.makeText(this,avgint.toString(),Toast.LENGTH_SHORT).show();
-                Log.i("ratingwork",ratedint.toString()+avgint.toString());
-            }
-
-
-
-
-
-
+                Toast.makeText(this,"checkche3ck",Toast.LENGTH_SHORT).show();
+                Log.i("after",ratedint.toString()+avgint.toString())
+            }, 2000)
 
 
 
@@ -218,7 +243,6 @@ class DonorProcessActivity : AppCompatActivity() {
                                 }
                             }
                         }
-
                     }
                 }
 

@@ -2,6 +2,7 @@ package com.example.hungerspot
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
@@ -31,6 +32,7 @@ class VolunteerAccountViewerActivity : AppCompatActivity() {
         var btnaccept=findViewById<Button>(R.id.btnforacceptid);
         var btnreject=findViewById<Button>(R.id.btnforrejectid);
         var volunterdp=findViewById<ImageView>(R.id.volunteerdpids);
+        var ratingtxtl=findViewById<TextView>(R.id.ratingavgid2);
 
         this.setTitle("Volunteer Details");
 
@@ -44,10 +46,41 @@ class VolunteerAccountViewerActivity : AppCompatActivity() {
         val pincode= list?.get(1);
         val typesofuser= list?.get(2);
 
+        var temprate:Float=0F;
+        var tempnof:Int=0;
+
 
         val intents3=intent;
         val idofvolunt=intents3.getStringExtra("volunteerdetails");
         val idofdishes=intents3.getStringExtra("volunteerdetails2");
+
+        var refforrating=FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString()).child(idofvolunt.toString()).child("Ratings@@");
+        refforrating.addValueEventListener(object :ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.key.toString()=="Ratings@@"){
+                    for (h in snapshot.children){
+                        if(h.key.toString()=="avgrating"){
+                            temprate=h.value.toString().toFloat()
+                        }else if(h.key.toString()=="noofclient"){
+                            tempnof=h.value.toString().toInt();
+                        }
+                    }
+                }else{
+                    ratingtxtl.text="Not Yet Rated";
+                }
+
+            }
+
+        })
+        Handler().postDelayed({
+            Log.i("finalshowdown",temprate.toString()+tempnof.toString());
+            tempnof.toFloat();
+            var avgfinder=temprate/tempnof;
+            ratingtxtl.text=avgfinder.toString();
+
+        },2000)
+
 
         var reffs22 =
                 FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString()).child(idofvolunt.toString()).child("Mydp");
