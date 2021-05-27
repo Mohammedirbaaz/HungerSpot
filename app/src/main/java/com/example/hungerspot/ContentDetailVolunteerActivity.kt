@@ -1,5 +1,6 @@
 package com.example.hungerspot
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -92,6 +93,7 @@ class ContentDetailVolunteerActivity : AppCompatActivity() {
 
 
 
+
         Log.i("chhh",idofcontent.toString()+userid.toString()+pincode.toString()+typesofuser.toString());
 
         val reffs=FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child("MyContribution@@").child(idofcontent.toString());
@@ -163,6 +165,7 @@ class ContentDetailVolunteerActivity : AppCompatActivity() {
             var mydetailss=FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString()).child(userid.toString());
             mydetailss.addValueEventListener(object:ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {}
+                @SuppressLint("LongLogTag")
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for(h in snapshot.children){
                         if(h.key.toString()=="name"){
@@ -181,6 +184,7 @@ class ContentDetailVolunteerActivity : AppCompatActivity() {
                                 };
                                 val intent:Intent= Intent(this@ContentDetailVolunteerActivity,DonorMainActivity::class.java);
                                 startActivity(intent);
+                                Log.i("authsafter contentdetail",userid.toString());
                             }
                         }
                     }

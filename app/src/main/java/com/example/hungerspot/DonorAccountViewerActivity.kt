@@ -33,7 +33,7 @@ class DonorAccountViewerActivity : AppCompatActivity() {
         var uploaderdp=findViewById<ImageView>(R.id.uploaderdpid);
 
 
-        var reffs223 = FirebaseDatabase.getInstance().getReference(typesofuser.toString()).child(pincode.toString()).child(userid.toString()).child("Mydp");
+        var reffs223 = FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(donorids.toString()).child("Mydp");
         reffs223.addValueEventListener(object:ValueEventListener{
             override fun onCancelled(error: DatabaseError) {}
             override fun onDataChange(snapshot: DataSnapshot) {

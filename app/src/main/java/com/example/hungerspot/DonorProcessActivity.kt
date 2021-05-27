@@ -37,6 +37,8 @@ class DonorProcessActivity : AppCompatActivity() {
     var ratedint: Int?=0;
     var avgint:Float?=0F;
 
+    var myname:String?=null;
+
 
 
 
@@ -63,6 +65,7 @@ class DonorProcessActivity : AppCompatActivity() {
         btnsatisfied?.visibility= View.GONE;
         btnnotsatisfied?.visibility=View.GONE;
         findViewById<TextView>(R.id.didntsuplytxtid).visibility=View.VISIBLE;
+        findViewById<RatingBar>(R.id.ratingbarid).visibility=View.GONE;
 
 
 
@@ -89,6 +92,14 @@ class DonorProcessActivity : AppCompatActivity() {
                 }
             }
         })
+        val reffss=FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString()).child(userid.toString()).child("name");
+        reffss.addValueEventListener(object:ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                myname=snapshot.value.toString();
+            }
+
+        })
 
         val reffstemp=FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(userid.toString()).child("Finishedwork@");
 
@@ -108,6 +119,8 @@ class DonorProcessActivity : AppCompatActivity() {
                                 btnsatisfied?.visibility= View.VISIBLE;
                                 btnnotsatisfied?.visibility=View.VISIBLE;
                                 findViewById<TextView>(R.id.didntsuplytxtid).visibility=View.GONE;
+                                findViewById<RatingBar>(R.id.ratingbarid).visibility=View.VISIBLE;
+
                             }
                         }
                         else if(k.key.toString()=="imgurl1"){
@@ -239,7 +252,17 @@ class DonorProcessActivity : AppCompatActivity() {
                         for(k in h.children){
                             if (k.key.toString()=="idofdish"){
                                 if(k.value.toString()==dishesids.toString()){
+
                                     refforreomverprocessing.child(h.key.toString()).removeValue();
+                                    val userss= myname?.let { it1 -> User(userid.toString(), it1, pincode.toString(),"Donor") };
+                                    val sessionManagement = SessionManagment();
+                                    sessionManagement.SessionManagement2(this@DonorProcessActivity);
+                                    if (userss != null) {
+                                        sessionManagement.saveSession(userss)
+                                    };
+                                    val intent:Intent= Intent(this@DonorProcessActivity,DonorMainActivity::class.java);
+                                    startActivity(intent);
+                                    Log.i("authssss Donor",userid.toString());
                                 }
                             }
                         }
@@ -247,6 +270,11 @@ class DonorProcessActivity : AppCompatActivity() {
                 }
 
             })
+
+
+
+
+
         }
 
 
@@ -274,7 +302,6 @@ class DonorProcessActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("MissingPermission")
     fun startcall(strr:String?){
         val callintent=Intent(Intent.ACTION_CALL);
         callintent.data= Uri.parse("tel:"+strr);

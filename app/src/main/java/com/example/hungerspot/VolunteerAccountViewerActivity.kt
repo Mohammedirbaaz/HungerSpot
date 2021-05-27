@@ -1,5 +1,6 @@
 package com.example.hungerspot
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -14,6 +15,8 @@ import com.squareup.picasso.Picasso
 class VolunteerAccountViewerActivity : AppCompatActivity() {
 
     var nameofddd:String?=null;
+    var myname:String?=null;
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -142,6 +145,14 @@ class VolunteerAccountViewerActivity : AppCompatActivity() {
                 }
             }
         })
+        val reffss=FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString()).child(userid.toString()).child("name");
+        reffss.addValueEventListener(object:ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                myname=snapshot.value.toString();
+            }
+
+        })
 
         btnaccept.setOnClickListener{
 
@@ -177,6 +188,19 @@ class VolunteerAccountViewerActivity : AppCompatActivity() {
                 }
 
             })
+            val userss= myname?.let { it1 -> User(userid.toString(), it1, pincode.toString(),"Donor") };
+            Log.i("auths",userid.toString());
+
+
+            val sessionManagement = SessionManagment();
+            sessionManagement.SessionManagement2(this@VolunteerAccountViewerActivity);
+            if (userss != null) {
+                sessionManagement.saveSession(userss)
+            };
+            val intent: Intent = Intent(this@VolunteerAccountViewerActivity,DonorMainActivity::class.java);
+            startActivity(intent);
+            Log.i("authsafter",userid.toString());
+
 
         }
         btnreject.setOnClickListener{

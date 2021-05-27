@@ -10,6 +10,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.Button
@@ -36,6 +37,8 @@ class VolunteerProcessActivity : AppCompatActivity() {
 
     var imgid1id: ImageView? =null;
      var imgid2id:ImageView?=null;
+    var myname:String?=null;
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -117,6 +120,14 @@ class VolunteerProcessActivity : AppCompatActivity() {
             }
 
         })
+        val reffss=FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString()).child(userid.toString()).child("name");
+        reffss.addValueEventListener(object:ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                myname=snapshot.value.toString();
+            }
+
+        })
 
         imgid1id?.setOnClickListener{
             startFileChooser();
@@ -135,6 +146,7 @@ class VolunteerProcessActivity : AppCompatActivity() {
                             imgreffs2.putFile(filepath2).addOnSuccessListener(object :OnSuccessListener<UploadTask.TaskSnapshot>{
                                 override fun onSuccess(p1: UploadTask.TaskSnapshot?) {
                                     imgreffs2.downloadUrl.addOnSuccessListener(object:OnSuccessListener<Uri>{
+                                        @SuppressLint("LongLogTag")
                                         override fun onSuccess(p1: Uri?) {
                                             imgurl2=p1.toString();
                                             val finished1=workfinish(imgurl,imgurl2,voluntsid.toString(),dishesids.toString(),userid.toString());
@@ -143,7 +155,17 @@ class VolunteerProcessActivity : AppCompatActivity() {
                                             finishondonorref.setValue(finished1).addOnSuccessListener {
                                             }
                                             finishonvoluntref.setValue(finished1).addOnSuccessListener {
-                                                Toast.makeText(this@VolunteerProcessActivity,"Image Uploaded",Toast.LENGTH_SHORT).show();
+//                                                Toast.makeText(this@VolunteerProcessActivity,"Image Uploaded",Toast.LENGTH_SHORT).show();
+                                                val userss= myname?.let { it1 -> User(userid.toString(), it1, pincode.toString(),"Volunteer") };
+
+                                                val sessionManagement = SessionManagment();
+                                                sessionManagement.SessionManagement2(this@VolunteerProcessActivity);
+                                                if (userss != null) {
+                                                    sessionManagement.saveSession(userss)
+                                                };
+                                                val intent:Intent= Intent(this@VolunteerProcessActivity,DonorMainActivity::class.java);
+                                                startActivity(intent);
+                                                Log.i("authsafter volunteerprocess",userid.toString());
                                             }
                                         }
                                     })
