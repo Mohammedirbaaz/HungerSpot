@@ -25,22 +25,15 @@ class DonorProcessActivity : AppCompatActivity() {
     var imgid1idnn:ImageView?=null;
     var imgid2idnn:ImageView?=null;
     var btnsatisfied:Button?=null;
-    var btnnotsatisfied:Button?=null;
     var imguri1:Uri?=null;
     var imguri2:Uri?=null;
 
     var ratedc:Int?=0;
     var avgc:Float?=0F;
-
-
-
     var ratedint: Int?=0;
     var avgint:Float?=0F;
 
     var myname:String?=null;
-
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,14 +49,12 @@ class DonorProcessActivity : AppCompatActivity() {
         val dishesids=intss.getStringExtra("voluntprocessdetail2");
         imgid1idnn=findViewById(R.id.imgproid1);
         imgid2idnn=findViewById(R.id.imgproid2);
-        btnsatisfied=findViewById(R.id.btnsatisfiedid);
-        btnnotsatisfied=findViewById(R.id.btnunsatisfied);
+        btnsatisfied=findViewById(R.id.btnsatisfiedid)
 
         findViewById<LinearLayout>(R.id.ldidd).visibility=View.GONE;
         imgid1idnn?.visibility= View.GONE;
         imgid2idnn?.visibility= View.GONE;
         btnsatisfied?.visibility= View.GONE;
-        btnnotsatisfied?.visibility=View.GONE;
         findViewById<TextView>(R.id.didntsuplytxtid).visibility=View.VISIBLE;
         findViewById<RatingBar>(R.id.ratingbarid).visibility=View.GONE;
 
@@ -117,7 +108,6 @@ class DonorProcessActivity : AppCompatActivity() {
                                 imgid1idnn?.visibility= View.VISIBLE;
                                 imgid2idnn?.visibility= View.VISIBLE;
                                 btnsatisfied?.visibility= View.VISIBLE;
-                                btnnotsatisfied?.visibility=View.VISIBLE;
                                 findViewById<TextView>(R.id.didntsuplytxtid).visibility=View.GONE;
                                 findViewById<RatingBar>(R.id.ratingbarid).visibility=View.VISIBLE;
 
@@ -139,80 +129,53 @@ class DonorProcessActivity : AppCompatActivity() {
             }
 
         })
-        btnnotsatisfied?.setOnClickListener {
 
-        }
 
         btnsatisfied?.setOnClickListener {
 
             var ratingb=findViewById<RatingBar>(R.id.ratingbarid);
-
-
             var ratingcounts=ratingb.rating;
 
-
             val refforrating=FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString()).child(voluntsid.toString()).child("Ratings@@");
-
-            Handler().postDelayed({
                 refforrating.addValueEventListener(object :ValueEventListener{
                     override fun onCancelled(error: DatabaseError) {}
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        Log.i("snapshotva",snapshot.key.toString());
-
                         if (snapshot.key.toString()=="Ratings@@"){
                             Log.i("availabley","yes");
                             for (h in snapshot.children){
-
                                 if(h.key.toString()=="noofclient") {
                                     ratedc=h.value.toString().toInt();
                                     ratedint=ratedc;
-                                    Log.i("b11",ratedint.toString());
+
                                     ratedint= ratedint?.plus(1);
-                                    Log.i("b12",ratedint.toString());
-
-
                                 }
                                 else if(h.key.toString()=="avgrating"){
                                     avgc=h.value.toString().toFloat();
                                     avgint= avgc;
                                     avgint= avgint?.plus(ratingcounts)
-
                                 }
                             }
                         }else if(snapshot.key.toString() !="Ratings@@"){
                             Log.i("availablen","no");
-
                             ratedint= ratedint?.plus(1);
                             avgint= avgint?.plus(ratingcounts)
-
                         }
-
                     }
                 })
-                Log.i("before",ratedint.toString()+avgint.toString());
-
-            },1000)
-
-
-
             Handler().postDelayed({
+                Log.i("before",ratedint.toString()+avgint.toString());
                 val insertratingdata=satisfiedclient(ratedint.toString(),avgint.toString());
                 refforrating.setValue(insertratingdata).addOnCompleteListener {
                     Log.i("ratingwork",ratedint.toString()+avgint.toString());
                 }
                 Toast.makeText(this,"checkche3ck",Toast.LENGTH_SHORT).show();
-                Log.i("after",ratedint.toString()+avgint.toString())
-            }, 2000)
-
-
-
+            },3000)
 
 
 
             val reforremovalacpt=FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(userid.toString()).child("Accepts");
             val refforremoverequest=FirebaseDatabase.getInstance().getReference("Donor").child(pincode.toString()).child(userid.toString()).child("Requests");
             val refforreomverprocessing=FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString()).child(voluntsid.toString()).child("Processing");
-
             reforremovalacpt.addValueEventListener(object:ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {}
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -224,11 +187,9 @@ class DonorProcessActivity : AppCompatActivity() {
                                 }
                             }
                         }
-
                     }
                 }
             })
-
             refforremoverequest.addValueEventListener(object:ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {}
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -240,10 +201,8 @@ class DonorProcessActivity : AppCompatActivity() {
                                 }
                             }
                         }
-
                     }
                 }
-
             })
             refforreomverprocessing.addValueEventListener(object:ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {}
@@ -252,35 +211,14 @@ class DonorProcessActivity : AppCompatActivity() {
                         for(k in h.children){
                             if (k.key.toString()=="idofdish"){
                                 if(k.value.toString()==dishesids.toString()){
-
                                     refforreomverprocessing.child(h.key.toString()).removeValue();
-                                    val userss= myname?.let { it1 -> User(userid.toString(), it1, pincode.toString(),"Donor") };
-                                    val sessionManagement = SessionManagment();
-                                    sessionManagement.SessionManagement2(this@DonorProcessActivity);
-                                    if (userss != null) {
-                                        sessionManagement.saveSession(userss)
-                                    };
-                                    val intent:Intent= Intent(this@DonorProcessActivity,DonorMainActivity::class.java);
-                                    startActivity(intent);
-                                    Log.i("authssss Donor",userid.toString());
                                 }
                             }
                         }
                     }
                 }
-
             })
-
-
-
-
-
         }
-
-
-
-
-
         callbtnfield.setOnClickListener {
             val reffsfortemp2=
                 FirebaseDatabase.getInstance().getReference("Volunteer").child(pincode.toString()).child(voluntsid.toString());
